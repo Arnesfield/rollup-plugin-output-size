@@ -1,0 +1,23 @@
+{
+  "name": "rollup-plugin-output-size",
+  "version": "0.0.1",
+  "description": "A Rollup plugin that displays output bundle sizes.",
+  "keywords": [
+    "rollup-plugin",
+    "output-size"
+  ],
+  "homepage": "https://github.com/Arnesfield/rollup-plugin-output-size#readme",
+  "bugs": {
+    "url": "https://github.com/Arnesfield/rollup-plugin-output-size/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arnesfield/rollup-plugin-output-size.git"
+  },
+  "license": "MIT",
+  "author": "Jefferson Rylee <rylee.jeff385@gmail.com>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
