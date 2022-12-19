@@ -16,8 +16,22 @@
   },
   "license": "MIT",
   "author": "Jefferson Rylee <rylee.jeff385@gmail.com>",
-  "main": "index.js",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    "import": "./lib/index.mjs",
+    "require": "./lib/index.cjs",
+    "default": "./lib/index.mjs"
+  },
+  "main": "lib/index.cjs",
+  "module": "lib/index.mjs",
+  "types": "lib/index.d.ts",
   "scripts": {
+    "prebuild": "rimraf lib",
+    "build": "rollup -c rollup.config.ts --configPlugin typescript",
+    "lint": "eslint . --ext .js,.ts",
+    "lint:strict": "npm run lint -- --max-warnings 0",
+    "start": "npm run build -- -w --no-watch.clearScreen",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
