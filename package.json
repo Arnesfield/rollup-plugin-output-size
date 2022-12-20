@@ -26,9 +26,12 @@
   "main": "lib/index.cjs",
   "module": "lib/index.mjs",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "prebuild": "rimraf lib",
-    "build": "rollup -c rollup.config.ts --configPlugin typescript",
+    "build": "rollup -c rollup.config.ts --configPlugin esbuild",
     "lint": "eslint . --ext .js,.ts",
     "lint:strict": "npm run lint -- --max-warnings 0",
     "start": "npm run build -- -w --no-watch.clearScreen",
@@ -64,11 +67,14 @@
     "typescript": "^4.9.4"
   },
   "peerDependencies": {
-    "rollup": "^1.20.0 || ^2.0.0 || ^3.0.0"
+    "rollup": "^2.0.0 || ^3.0.0"
   },
   "peerDependenciesMeta": {
     "rollup": {
       "optional": true
     }
+  },
+  "engines": {
+    "node": ">=14.16.0"
   }
 }

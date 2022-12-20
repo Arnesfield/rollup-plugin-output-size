@@ -1,7 +1,7 @@
 import eslint from '@rollup/plugin-eslint';
 import typescript from '@rollup/plugin-typescript';
 import { createRequire } from 'module';
-import { defineConfig, Plugin } from 'rollup';
+import { Plugin, RollupOptions } from 'rollup';
 import dts from 'rollup-plugin-dts';
 import esbuild from 'rollup-plugin-esbuild';
 import type Pkg from './package.json';
@@ -26,7 +26,11 @@ function noEmit(): Plugin {
   };
 }
 
-export default defineConfig([
+function createConfig(options: (false | RollupOptions)[]): RollupOptions[] {
+  return options.filter((options): options is RollupOptions => !!options);
+}
+
+export default createConfig([
   {
     input,
     external,
@@ -42,19 +46,10 @@ export default defineConfig([
     output: { file: pkg.types, format: 'esm' },
     plugins: [dts(), outputSize()]
   },
-  {
+  !PROD && {
     input,
     external,
     watch: { skipWrite: true },
-    onwarn: warning => {
-      if (PROD) {
-        throw warning;
-      }
-    },
-    plugins: [
-      noEmit(),
-      typescript(),
-      eslint({ throwOnError: PROD, throwOnWarning: PROD })
-    ]
+    plugins: [noEmit(), typescript(), eslint()]
   }
 ]);
