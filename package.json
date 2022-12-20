@@ -32,7 +32,9 @@
     "lint": "eslint . --ext .js,.ts",
     "lint:strict": "npm run lint -- --max-warnings 0",
     "start": "npm run build -- -w --no-watch.clearScreen",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "concurrently -r --kill-others-on-fail npm:test:mocha npm:lint:strict \"tsc --skipLibCheck\"",
+    "test:mocha": "mocha -r tsx **/*.spec.ts",
+    "test:watch": "npm run test:mocha -- --watch --watch-files src,test"
   },
   "dependencies": {
     "colorette": "^2.0.19",
@@ -42,14 +44,23 @@
   "devDependencies": {
     "@rollup/plugin-eslint": "^9.0.1",
     "@rollup/plugin-typescript": "^10.0.1",
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1",
     "@types/node": "^18.11.17",
+    "@types/sinon": "^10.0.13",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
+    "chai": "^4.3.7",
+    "concurrently": "^7.6.0",
     "eslint": "^8.30.0",
+    "mocha": "^10.2.0",
     "rimraf": "^3.0.2",
     "rollup": "^3.7.5",
     "rollup-plugin-dts": "^5.0.0",
     "rollup-plugin-esbuild": "^5.0.0",
+    "sinon": "^15.0.1",
+    "strip-ansi": "^7.0.1",
+    "tsx": "^3.12.1",
     "typescript": "^4.9.4"
   },
   "peerDependencies": {
