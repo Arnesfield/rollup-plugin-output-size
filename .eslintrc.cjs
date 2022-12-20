@@ -4,7 +4,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
-  ignorePatterns: ['node_modules', 'dist', 'lib', 'tmp', '*.json'],
+  ignorePatterns: ['node_modules', 'lib', 'tmp', 'fixtures'],
   rules: {
     'no-constant-condition': 0,
     'no-unused-vars': 0,

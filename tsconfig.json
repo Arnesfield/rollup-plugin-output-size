@@ -11,6 +11,6 @@
     "resolveJsonModule": true,
     "moduleResolution": "node"
   },
-  "include": ["src/**/*", "rollup.config.ts"],
-  "exclude": ["node_modules", "lib", "tmp"]
+  "include": ["src/**/*", "**/*.spec.ts", "rollup.config.ts"],
+  "exclude": ["node_modules", "lib", "tmp", "fixtures"]
 }
