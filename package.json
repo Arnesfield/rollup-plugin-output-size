@@ -45,7 +45,9 @@
     "pretty-bytes": "^6.0.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-eslint": "^9.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^10.0.1",
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1",
