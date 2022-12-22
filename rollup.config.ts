@@ -1,7 +1,9 @@
+import commonjs from '@rollup/plugin-commonjs';
 import eslint from '@rollup/plugin-eslint';
+import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import { createRequire } from 'module';
-import { Plugin, RollupOptions } from 'rollup';
+import { RollupOptions } from 'rollup';
 import dts from 'rollup-plugin-dts';
 import esbuild from 'rollup-plugin-esbuild';
 import type Pkg from './package.json';
@@ -14,31 +16,32 @@ const input = 'src/index.ts';
 const WATCH = process.env.ROLLUP_WATCH === 'true';
 const PROD = !WATCH || process.env.NODE_ENV === 'production';
 const external = Object.keys(pkg.dependencies).concat('path');
+const esmExternals = ['gzip-size', 'pretty-bytes'];
 
-function noEmit(): Plugin {
-  return {
-    name: 'no-emit',
-    generateBundle(_, bundle) {
-      for (const file in bundle) {
-        delete bundle[file];
-      }
-    }
-  };
-}
-
-function createConfig(options: (false | RollupOptions)[]): RollupOptions[] {
+function defineConfig(options: (false | RollupOptions)[]) {
   return options.filter((options): options is RollupOptions => !!options);
 }
 
-export default createConfig([
+export default defineConfig([
   {
     input,
     external,
-    output: [
-      { file: pkg.main, format: 'cjs', exports: 'named', sourcemap: PROD },
-      { file: pkg.module, format: 'esm', exports: 'named', sourcemap: PROD }
-    ],
+    output: { file: pkg.module, format: 'esm', sourcemap: PROD },
     plugins: [esbuild(), outputSize()]
+  },
+  {
+    input,
+    external: external.filter(ext => !esmExternals.includes(ext)),
+    output: {
+      dir: 'lib',
+      format: 'cjs',
+      exports: 'named',
+      sourcemap: PROD,
+      entryFileNames: '[name].cjs',
+      chunkFileNames: '[name].cjs',
+      manualChunks: { vendor: esmExternals }
+    },
+    plugins: [esbuild(), commonjs(), nodeResolve(), outputSize()]
   },
   {
     input,
@@ -50,6 +53,6 @@ export default createConfig([
     input,
     external,
     watch: { skipWrite: true },
-    plugins: [noEmit(), typescript(), eslint()]
+    plugins: [eslint(), typescript()]
   }
 ]);
