@@ -97,6 +97,8 @@ describe('options.handle', () => {
     const types: OutputType[] = [];
     const handle = spy<Handle>(info => {
       expectOutputInfo(info);
+      const name = info.type === 'asset' ? 'add.js.map' : 'add.js';
+      expect(info.path).to.equal(`fixtures/test/${name}`);
       types.push(info.type);
     });
     await bundle({
@@ -113,11 +115,20 @@ describe('options.handle', () => {
     const types: OutputType[] = [];
     const handle = spy<Handle>(info => {
       expectOutputInfo(info);
+      const chunk = 'fixtures/test/shared/add.js';
+      expect(info.path).to.have.oneOf([
+        chunk,
+        'fixtures/test/index.js',
+        'fixtures/test/main.js'
+      ]);
+      if (info.type === 'chunk') {
+        expect(info.path).to.equal(chunk);
+      }
       types.push(info.type);
     });
     await bundle({
       input: { main: inputs.main, index: inputs.index },
-      output: { dir: 'fixtures/test' },
+      output: { dir: 'fixtures/test', chunkFileNames: 'shared/[name].js' },
       plugins: [outputSize({ handle })]
     });
     expect(handle.calledThrice).to.be.true;
