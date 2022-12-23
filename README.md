@@ -43,9 +43,12 @@ You can change and override the behavior of this plugin through its options. Not
 
 ### hide
 
-Type: `OutputType[]`
+Type: `boolean | OutputType[]`<br>
+Default: `false`
 
-Specify which output types will not be displayed. Output types are: `asset`, `chunk`, and `entry`.
+Set to `true` to disable output for output types (except [`summary`](#summary)) or set an array to specify which output types will not be displayed.
+
+Output types are: `asset`, `chunk`, and `entry`.
 
 > Note: Both `chunk` and `entry` output types are `OutputChunk`s but `entry` chunks have `isEntry` values of `true`.
 
@@ -55,6 +58,19 @@ Type: `boolean | OutputType[]`<br>
 Default: `true`
 
 Set to `false` to skip getting gzipped size, or set an array to only get gzipped sizes of specified output types.
+
+### summary
+
+Type: `boolean | 'always' | SummaryCallback`<br>
+Default: `true`
+
+Display summary output.
+
+- Set to `false` to disable summary output.
+- Set to `always` to force summary output even if there is only one (1) or no output.
+- Set a callback to override default summary output.
+
+See types in [`summary.types.ts`](src/types/summary.types.ts).
 
 ### silent
 
@@ -69,34 +85,9 @@ Type: `(info: OutputInfo, output: OutputAsset | OutputChunk) => void | Promise<v
 
 Override the default logging of output info.
 
-The second argument `output` is the current Rollup output asset or chunk to log, while the first argument is the `OutputInfo`:
+The second argument `output` is the current Rollup output asset or chunk to log, while the first argument is the `OutputInfo`.
 
-```typescript
-/** Output info. */
-export interface OutputInfo {
-  /** Output path. */
-  path: string;
-  /** Output type. */
-  type: OutputType;
-  /** Output size. */
-  size: number;
-  /** Human readable output size. */
-  hSize: string;
-  /**
-   * The gzipped size of the output. Provided
-   * unless the `gzip` option is set to `false`.
-   */
-  gzip?: OutputInfoGzip;
-}
-
-/** Output info gzip. */
-export interface OutputInfoGzip {
-  /** The gzipped size. */
-  size: number;
-  /** Human readable gzipped size. */
-  hSize: string;
-}
-```
+See types in [`output.types.ts`](src/types/output.types.ts).
 
 ## Other Utilities
 
@@ -130,7 +121,7 @@ export default {
 
 ### gzip (util)
 
-Type: `(input: string | Uint8Array) => Promise<OutputInfoGzip>`
+Type: `(input: string | Uint8Array) => Promise<Size>`
 
 Used to get the gzipped size of input.
 
@@ -151,6 +142,33 @@ export default {
     })
   ]
 };
+```
+
+### summarize
+
+Type: `(summary: Summary) => string`
+
+Used to get the default display format of summary info.
+
+```javascript
+import outputSize, { summarize } from 'rollup-plugin-output-size';
+
+export default {
+  input: 'index.js',
+  output: { dir: 'dist' },
+  plugins: [
+    outputSize({
+      summary(summary) {
+        console.log(summarize(summary));
+      }
+    })
+  ]
+};
+```
+
+```text
+[total] {entry.hSize} + {chunk.hSize} + {asset.hSize} = {total.hSize}
+[total] {gzip.entry.hSize} + {gzip.chunk.hSize} + {gzip.asset.hSize} = {gzip.total.hSize} (gzip)
 ```
 
 ## License
