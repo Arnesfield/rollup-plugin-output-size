@@ -1,5 +1,5 @@
 import { blue, cyan, dim, gray, magenta, red, yellow } from 'colorette';
-import { OutputInfo } from './types';
+import { OutputInfo } from '../types/output.types';
 
 /**
  * Get the default display format of output info.
