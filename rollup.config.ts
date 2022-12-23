@@ -45,7 +45,6 @@ export default defineConfig([
   },
   {
     input,
-    external,
     output: { file: pkg.types, format: 'esm' },
     plugins: [dts(), outputSize()]
   },

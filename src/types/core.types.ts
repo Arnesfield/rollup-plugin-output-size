@@ -1,47 +1,33 @@
 import { OutputBundle } from 'rollup';
-
-/** Output type. */
-export type OutputType = OutputBundle[keyof OutputBundle]['type'] | 'entry';
-
-/** Output info gzip. */
-export interface OutputInfoGzip {
-  /** The gzipped size. */
-  size: number;
-  /** Human readable gzipped size. */
-  hSize: string;
-}
-
-/** Output info. */
-export interface OutputInfo {
-  /** Output path. */
-  path: string;
-  /** Output type. */
-  type: OutputType;
-  /** Output size. */
-  size: number;
-  /** Human readable output size. */
-  hSize: string;
-  /**
-   * The gzipped size of the output. Provided
-   * unless the `gzip` option is set to `false`.
-   */
-  gzip?: OutputInfoGzip;
-}
+import { OutputInfo, OutputType } from './output.types';
+import { SummaryCallback } from './summary.types';
 
 /**
  * Rollup plugin output size options.
  */
 export interface RollupOutputSizeOptions {
   /**
-   * Specify which output types will not be displayed.
+   * Set to `true` to disable output for output types (except summary)
+   * or set an array to specify which output types will not be displayed.
+   * @default false
    */
-  hide?: OutputType[];
+  hide?: boolean | OutputType[];
   /**
    * Set to `false` to skip getting gzipped size, or set an
    * array to only get gzipped sizes of specified output types.
    * @default true
    */
   gzip?: boolean | OutputType[];
+  /**
+   * Display summary output.
+   *
+   * Set to `false` to disable summary output.
+   * Set to `always` to force summary output even if
+   * there is only one (1) or no output.
+   * Set a callback to override default summary output.
+   * @default true
+   */
+  summary?: boolean | 'always' | SummaryCallback;
   /**
    * Disable output. This will also skip the `handle` callback.
    * @default false

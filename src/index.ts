@@ -1,5 +1,4 @@
-export * from './format';
-export * from './gzip';
-export * from './output-size';
-export { outputSize as default } from './output-size';
+export * from './core';
+export { outputSize as default } from './core';
 export * from './types';
+export * from './utils';
