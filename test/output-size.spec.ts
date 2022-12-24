@@ -305,7 +305,9 @@ describe('options', () => {
           }
         }
         expect(summary.total.size).to.equal(total.size);
+        expect(summary.total.hSize).to.equal(`${total.size} B`);
         expect(summary.gzip?.total.size).to.equal(total.gzip);
+        expect(summary.gzip?.total.hSize).to.equal(`${total.gzip} B`);
       });
       const plugin = outputSize({ hide: true, summary });
       await bundle(true, {
