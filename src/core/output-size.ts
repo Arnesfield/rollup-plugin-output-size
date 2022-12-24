@@ -3,7 +3,7 @@ import prettyBytes from 'pretty-bytes';
 import { Plugin } from 'rollup';
 import { OUTPUT_TYPES } from '../constants';
 import { RollupOutputSizeOptions } from '../types/core.types';
-import { OutputInfo, OutputType } from '../types/output.types';
+import { OutputInfo } from '../types/output.types';
 import { Size } from '../types/size.types';
 import { Summary, SummaryOutput } from '../types/summary.types';
 import { format } from '../utils/format';
@@ -19,11 +19,11 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
   const hide = Array.isArray(options.hide) ? options.hide : options.hide || [];
   const gzipOptions = Array.isArray(options.gzip)
     ? options.gzip
-    : options.gzip == null || !!options.gzip || []; // unset or truthy
+    : options.gzip == null || !!options.gzip || [];
   const oSummary =
     typeof options.summary === 'function'
       ? options.summary
-      : options.summary == null || options.summary; // unset or truthy
+      : options.summary == null || options.summary;
   let summaryOutputs: SummaryOutput[] = [];
   return {
     name: 'output-size',
@@ -68,38 +68,31 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
       if (!oSummary || options.silent) {
         return;
       }
-      interface SizeItem {
-        size: number;
-        gzip: number;
-      }
-      const si = (): SizeItem => ({ size: 0, gzip: 0 });
-      const sizes: { [Key in OutputType]?: SizeItem } = {};
-      const total: SizeItem = si();
-      let includeGzip = true;
-      for (const { info } of summaryOutputs) {
-        const size = (sizes[info.type] = sizes[info.type] || si());
-        size.size += info.size;
-        total.size += info.size;
-        // exclude gzip if an info does not have gzip size
-        if (includeGzip && info.gzip) {
-          size.gzip += info.gzip.size;
-          total.gzip += info.gzip.size;
-        } else {
-          includeGzip = false;
-        }
-      }
       // create summary
-      const s = (size: number): Size => ({ size, hSize: prettyBytes(size) });
-      const summary = {
-        total: s(total.size),
-        gzip: includeGzip ? { total: s(total.gzip) } : undefined
-      } as Summary;
-      for (const type of OUTPUT_TYPES) {
-        const size = sizes[type] || si();
-        summary[type] = s(size.size);
-        if (summary.gzip) {
-          summary.gzip[type] = s(size.gzip);
+      const types = [...OUTPUT_TYPES, 'total'] as const;
+      const summary = { gzip: {} } as Summary;
+      for (const type of types) {
+        summary[type] = { size: 0, hSize: '0 B' };
+        (summary as Required<Summary>).gzip[type] = { size: 0, hSize: '0 B' };
+      }
+      // set summary sizes
+      for (const { info } of summaryOutputs) {
+        summary.total.size += info.size;
+        summary[info.type].size += info.size;
+        if (!summary.gzip) {
+          // exclude gzip if an info does not have gzip size
+        } else if (info.gzip) {
+          summary.gzip.total.size += info.gzip.size;
+          summary.gzip[info.type].size += info.gzip.size;
+        } else {
+          delete summary.gzip;
         }
+      }
+      // update hSizes
+      const s = (size: Size) => (size.hSize = prettyBytes(size.size));
+      for (const type of types) {
+        s(summary[type]);
+        summary.gzip && s(summary.gzip[type]);
       }
       // display summary
       if (typeof oSummary === 'function') {
