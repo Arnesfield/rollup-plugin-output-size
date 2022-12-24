@@ -46,18 +46,31 @@ You can change and override the behavior of this plugin through its options. Not
 Type: `boolean | OutputType[]`<br>
 Default: `false`
 
-Set to `true` to disable output for output types (except [`summary`](#summary)) or set an array to specify which output types will not be displayed.
+Disable output types display.
+
+Set to `true` to disable output for all output types, or set an array to specify which output types will not be displayed.
 
 Output types are: `asset`, `chunk`, and `entry`.
 
 > Note: Both `chunk` and `entry` output types are `OutputChunk`s but `entry` chunks have `isEntry` values of `true`.
+
+This option does not affect [`summary`](#summary) output.
 
 ### gzip
 
 Type: `boolean | OutputType[]`<br>
 Default: `true`
 
+Get gzipped sizes of output.
+
 Set to `false` to skip getting gzipped size, or set an array to only get gzipped sizes of specified output types.
+
+### silent
+
+Type: `boolean`<br>
+Default: `false`
+
+Disable output. This will also skip the [`handle`](#handle) and [`summary`](#summary) callbacks.
 
 ### summary
 
@@ -67,17 +80,10 @@ Default: `true`
 Display summary output.
 
 - Set to `false` to disable summary output.
-- Set to `always` to force summary output even if there is only one (1) or no output.
+- Set to `'always'` to force summary output even if there is only one (1) output.
 - Set a callback to override default summary output.
 
-See types in [`summary.types.ts`](src/types/summary.types.ts).
-
-### silent
-
-Type: `boolean`<br>
-Default: `false`
-
-Disable output. This will also skip the [`handle`](#handle) callback.
+> See types in [`summary.types.ts`](src/types/summary.types.ts).
 
 ### handle
 
@@ -87,11 +93,11 @@ Override the default logging of output info.
 
 The second argument `output` is the current Rollup output asset or chunk to log, while the first argument is the `OutputInfo`.
 
-See types in [`output.types.ts`](src/types/output.types.ts).
+> See types in [`output.types.ts`](src/types/output.types.ts).
 
 ## Other Utilities
 
-This package also includes some utility functions that you may find helpful, especially when making use of the [`handle`](#handle) option.
+This package also includes some utility functions that you may find helpful, especially when making use of the [`handle`](#handle) and [`summary`](#summary) options.
 
 ### format
 
