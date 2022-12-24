@@ -4,7 +4,11 @@
   "description": "A Rollup plugin that displays output bundle sizes.",
   "keywords": [
     "rollup-plugin",
-    "output-size"
+    "output-size",
+    "summary",
+    "output",
+    "size",
+    "gzip"
   ],
   "homepage": "https://github.com/Arnesfield/rollup-plugin-output-size#readme",
   "bugs": {
