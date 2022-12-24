@@ -1,5 +1,18 @@
-import { blue, cyan, dim, gray, green, magenta, red, yellow } from 'colorette';
+import { dim, gray, green, red, yellow } from 'colorette';
+import { COLOR, OUTPUT_TYPES } from '../constants';
 import { Summary } from '../types/summary.types';
+
+/**
+ * Create summary line.
+ * @param sizes Sizes to display.
+ * @param total Total size.
+ * @returns The summary line.
+ */
+function line(sizes: string[], total: string) {
+  return (
+    dim(green('[total] ')) + sizes.join(red(' + ')) + red(' = ') + yellow(total)
+  );
+}
 
 /**
  * Get the default display format of summary info.
@@ -10,29 +23,18 @@ export function summarize(summary: Summary): string {
   const { gzip, total } = summary;
   const sizes: string[] = [];
   const gzipSizes: string[] = [];
-  const colors = { asset: magenta, chunk: blue, entry: cyan };
-  for (const type of ['entry', 'chunk', 'asset'] as const) {
-    const color = colors[type];
+  for (const type of OUTPUT_TYPES) {
+    const color = COLOR[type];
     const item = summary[type];
-    const gzipItem = gzip && gzip[type];
-    if (item && item.size > 0) {
+    if (item.size > 0) {
       sizes.push(color(item.hSize));
     }
-    if (gzipItem && gzipItem.size > 0) {
-      gzipSizes.push(color(gzipItem.hSize));
+    if (gzip && gzip[type].size > 0) {
+      gzipSizes.push(color(gzip[type].hSize));
     }
   }
-  const plus = red(' + ');
-  const equals = red(' = ');
-  const totalLabel = dim(green('[total] '));
-  const totalStr = totalLabel + sizes.join(plus) + equals + yellow(total.hSize);
-  const gzipStr = gzip
-    ? '\n' +
-      totalLabel +
-      gzipSizes.join(plus) +
-      equals +
-      yellow(gzip.total.hSize) +
-      gray(' (gzip)')
-    : '';
-  return totalStr + gzipStr;
+  return (
+    line(sizes, total.hSize) +
+    (gzip ? '\n' + line(gzipSizes, gzip.total.hSize) + gray(' (gzip)') : '')
+  );
 }

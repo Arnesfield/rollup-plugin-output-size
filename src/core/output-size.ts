@@ -4,6 +4,7 @@ import { Plugin } from 'rollup';
 import { OUTPUT_TYPES } from '../constants';
 import { RollupOutputSizeOptions } from '../types/core.types';
 import { OutputInfo, OutputType } from '../types/output.types';
+import { Size } from '../types/size.types';
 import { Summary, SummaryOutput } from '../types/summary.types';
 import { format } from '../utils/format';
 import { gzip as getGzip } from '../utils/gzip';
@@ -71,12 +72,12 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
         size: number;
         gzip: number;
       }
-      const getSizeItem = (): SizeItem => ({ size: 0, gzip: 0 });
+      const si = (): SizeItem => ({ size: 0, gzip: 0 });
       const sizes: { [Key in OutputType]?: SizeItem } = {};
-      const total = getSizeItem();
+      const total: SizeItem = si();
       let includeGzip = true;
       for (const { info } of summaryOutputs) {
-        const size = (sizes[info.type] ||= getSizeItem());
+        const size = (sizes[info.type] = sizes[info.type] || si());
         size.size += info.size;
         total.size += info.size;
         // exclude gzip if an info does not have gzip size
@@ -88,27 +89,23 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
         }
       }
       // create summary
+      const s = (size: number): Size => ({ size, hSize: prettyBytes(size) });
       const summary = {
-        total: { size: total.size, hSize: prettyBytes(total.size) },
-        gzip: includeGzip
-          ? { total: { size: total.gzip, hSize: prettyBytes(total.gzip) } }
-          : undefined
+        total: s(total.size),
+        gzip: includeGzip ? { total: s(total.gzip) } : undefined
       } as Summary;
       for (const type of OUTPUT_TYPES) {
-        const size = sizes[type] || getSizeItem();
-        summary[type] = { size: size.size, hSize: prettyBytes(size.size) };
+        const size = sizes[type] || si();
+        summary[type] = s(size.size);
         if (summary.gzip) {
-          summary.gzip[type] = {
-            size: size.gzip,
-            hSize: prettyBytes(size.gzip)
-          };
+          summary.gzip[type] = s(size.gzip);
         }
       }
       // display summary
       if (typeof oSummary === 'function') {
         await oSummary(summary, summaryOutputs);
       } else if (oSummary === 'always' || summaryOutputs.length > 1) {
-        // show summary only if more than 1 output
+        // by default, show summary only if more than 1 output
         console.log(summarize(summary));
       }
     }

@@ -1,4 +1,5 @@
-import { blue, cyan, dim, gray, magenta, red, yellow } from 'colorette';
+import { dim, gray, red, yellow } from 'colorette';
+import { COLOR } from '../constants';
 import { OutputInfo } from '../types/output.types';
 
 /**
@@ -7,12 +8,9 @@ import { OutputInfo } from '../types/output.types';
  * @returns The display format.
  */
 export function format(info: OutputInfo): string {
-  const { path, type, hSize, gzip } = info;
-  const color = type === 'entry' ? cyan : type === 'chunk' ? blue : magenta;
-  const gzipLabel = gzip
-    ? red(' → ') + yellow(gzip.hSize) + gray(' (gzip)')
-    : '';
   return (
-    color(dim(`[${type}] `) + path + dim(' is ')) + yellow(hSize) + gzipLabel
+    COLOR[info.type](dim(`[${info.type}] `) + info.path + dim(' is ')) +
+    yellow(info.hSize) +
+    (info.gzip ? red(' → ') + yellow(info.gzip.hSize) + gray(' (gzip)') : '')
   );
 }
