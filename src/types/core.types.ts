@@ -12,7 +12,7 @@ export interface RollupOutputSizeOptions {
    * Set to `true` to disable output for output types, or set
    * an array to specify which output types will not be displayed.
    *
-   * This option does not affect {@link summary} output.
+   * This option does not affect {@linkcode summary} output.
    * @default false
    */
   hide?: boolean | OutputType[];
@@ -25,7 +25,8 @@ export interface RollupOutputSizeOptions {
    */
   gzip?: boolean | OutputType[];
   /**
-   * Disable output. This will also skip the {@link handle} and {@link summary} callbacks.
+   * Disable output. This will also skip the
+   * {@linkcode handle} and {@linkcode summary} callbacks.
    * @default false
    */
   silent?: boolean;
