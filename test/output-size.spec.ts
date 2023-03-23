@@ -264,11 +264,7 @@ describe('options', () => {
   describe('summary', () => {
     // remove tmp dir after build.write()
     afterEach(async () => {
-      await new Promise<void>((resolve, reject) => {
-        rimraf(file('fixtures/tmp'), error => {
-          error ? reject(error) : resolve();
-        });
-      });
+      await rimraf(file('fixtures/tmp'));
     });
 
     it('should be called when writing build', async () => {
