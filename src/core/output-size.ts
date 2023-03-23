@@ -43,7 +43,8 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
           continue;
         }
         const data = isChunk ? output.code : output.source;
-        const size = typeof data === 'string' ? data.length : data.byteLength;
+        const size =
+          typeof data === 'string' ? Buffer.byteLength(data) : data.byteLength;
         const hSize = prettyBytes(size);
         const gzip =
           gzipOptions === true || gzipOptions.includes(type)
