@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import path from 'path';
-import rimraf from 'rimraf';
+import { rimraf } from 'rimraf';
 import { rollup, RollupOptions } from 'rollup';
 import { spy } from 'sinon';
 import {
