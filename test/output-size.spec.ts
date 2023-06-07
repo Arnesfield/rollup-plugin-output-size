@@ -279,6 +279,22 @@ describe('options', () => {
       expect(summary.calledOnce).to.be.true;
     });
 
+    it('should be called once for multiple outputs', async () => {
+      const summary = spy<SummaryCallback>(() => {});
+      const plugin = outputSize({ hide: true, summary });
+      expect(summary.calledOnce).to.be.false;
+      await bundle(true, {
+        input: inputs.index,
+        output: [
+          { dir: inputs.tmp },
+          { dir: `${inputs.tmp}/dir1` },
+          { dir: `${inputs.tmp}/dir2` }
+        ],
+        plugins: [plugin]
+      });
+      expect(summary.calledOnce).to.be.true;
+    });
+
     it('should include summary info', async () => {
       const summary = spy<SummaryCallback>((summary, outputs) => {
         expect(summary).to.be.an('object');
