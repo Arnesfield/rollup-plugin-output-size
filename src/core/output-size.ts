@@ -24,11 +24,15 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
     typeof options.summary === 'function'
       ? options.summary
       : options.summary == null || options.summary;
-  let summaryOutputs: SummaryOutput[] = [];
+  const state = {
+    summaryOutputs: [] as SummaryOutput[],
+    didOutputSummary: false
+  };
   return {
     name: 'output-size',
     outputOptions() {
-      summaryOutputs = [];
+      state.summaryOutputs = [];
+      state.didOutputSummary = false;
     },
     async generateBundle(outputOptions, bundle) {
       if (options.silent) {
@@ -55,7 +59,7 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
           output.fileName
         );
         const info: OutputInfo = { path: filePath, type, size, hSize, gzip };
-        summaryOutputs.push({ info, output });
+        state.summaryOutputs.push({ info, output });
         if (shouldHide) {
           // do nothing
         } else if (typeof options.handle === 'function') {
@@ -66,9 +70,10 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
       }
     },
     async writeBundle() {
-      if (!oSummary || options.silent) {
+      if (state.didOutputSummary || !oSummary || options.silent) {
         return;
       }
+      state.didOutputSummary = true;
       // create summary
       const types = [...OUTPUT_TYPES, 'total'] as const;
       const summary = { gzip: {} } as Summary;
@@ -77,7 +82,7 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
         (summary as Required<Summary>).gzip[type] = { size: 0, hSize: '0 B' };
       }
       // set summary sizes
-      for (const { info } of summaryOutputs) {
+      for (const { info } of state.summaryOutputs) {
         summary.total.size += info.size;
         summary[info.type].size += info.size;
         if (!summary.gzip) {
@@ -97,8 +102,8 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
       }
       // display summary
       if (typeof oSummary === 'function') {
-        await oSummary(summary, summaryOutputs);
-      } else if (oSummary === 'always' || summaryOutputs.length > 1) {
+        await oSummary(summary, state.summaryOutputs);
+      } else if (oSummary === 'always' || state.summaryOutputs.length > 1) {
         // by default, show summary only if more than 1 output
         console.log(summarize(summary));
       }
