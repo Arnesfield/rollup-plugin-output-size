@@ -17,24 +17,21 @@ import { summarize } from '../utils/summarize.js';
  */
 export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
   const hide = Array.isArray(options.hide) ? options.hide : options.hide || [];
-  const gzipOptions = Array.isArray(options.gzip)
+  const gzipOpts = Array.isArray(options.gzip)
     ? options.gzip
     : options.gzip == null || !!options.gzip || [];
-  const oSummary =
+  const summaryOpts =
     typeof options.summary === 'function'
       ? options.summary
       : options.summary == null || options.summary;
-  const state = {
-    summaryOutputs: [] as SummaryOutput[],
-    didOutputSummary: false
-  };
+  const state = { summaries: [] as SummaryOutput[], didSummarize: false };
   return {
     name: 'output-size',
     outputOptions() {
-      state.summaryOutputs = [];
-      state.didOutputSummary = false;
+      state.summaries = [];
+      state.didSummarize = false;
     },
-    async generateBundle(outputOptions, bundle) {
+    async generateBundle(outputOpts, bundle) {
       if (options.silent) {
         return;
       }
@@ -43,7 +40,7 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
         const type = isChunk && output.isEntry ? 'entry' : output.type;
         const shouldHide = hide === true || hide.includes(type);
         // skip other checks if no summary is required
-        if (!oSummary && shouldHide) {
+        if (!summaryOpts && shouldHide) {
           continue;
         }
         const data = isChunk ? output.code : output.source;
@@ -51,15 +48,15 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
           typeof data === 'string' ? Buffer.byteLength(data) : data.byteLength;
         const hSize = prettyBytes(size);
         const gzip =
-          gzipOptions === true || gzipOptions.includes(type)
+          gzipOpts === true || gzipOpts.includes(type)
             ? await getGzip(data)
             : undefined;
         const filePath = path.join(
-          outputOptions.dir || path.dirname(outputOptions.file || ''),
+          outputOpts.dir || path.dirname(outputOpts.file || ''),
           output.fileName
         );
         const info: OutputInfo = { path: filePath, type, size, hSize, gzip };
-        state.summaryOutputs.push({ info, output });
+        state.summaries.push({ info, output });
         if (shouldHide) {
           // do nothing
         } else if (typeof options.handle === 'function') {
@@ -70,10 +67,10 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
       }
     },
     async writeBundle() {
-      if (state.didOutputSummary || !oSummary || options.silent) {
+      if (state.didSummarize || !summaryOpts || options.silent) {
         return;
       }
-      state.didOutputSummary = true;
+      state.didSummarize = true;
       // create summary
       const types = [...OUTPUT_TYPES, 'total'] as const;
       const summary = { gzip: {} } as Summary;
@@ -82,7 +79,7 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
         (summary as Required<Summary>).gzip[type] = { size: 0, hSize: '0 B' };
       }
       // set summary sizes
-      for (const { info } of state.summaryOutputs) {
+      for (const { info } of state.summaries) {
         summary.total.size += info.size;
         summary[info.type].size += info.size;
         if (!summary.gzip) {
@@ -101,9 +98,9 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
         summary.gzip && s(summary.gzip[type]);
       }
       // display summary
-      if (typeof oSummary === 'function') {
-        await oSummary(summary, state.summaryOutputs);
-      } else if (oSummary === 'always' || state.summaryOutputs.length > 1) {
+      if (typeof summaryOpts === 'function') {
+        await summaryOpts(summary, state.summaries);
+      } else if (summaryOpts === 'always' || state.summaries.length > 1) {
         // by default, show summary only if more than 1 output
         console.log(summarize(summary));
       }
