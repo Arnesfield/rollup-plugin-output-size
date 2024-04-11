@@ -2,6 +2,7 @@
 [npm-url]: https://www.npmjs.com/package/rollup-plugin-output-size
 [ci-img]: https://github.com/Arnesfield/rollup-plugin-output-size/workflows/Node.js%20CI/badge.svg
 [ci-url]: https://github.com/Arnesfield/rollup-plugin-output-size/actions?query=workflow%3A"Node.js+CI"
+[preview-img]: https://gist.githubusercontent.com/Arnesfield/0f85b2ddfa1109aec6ed2ec46ee42b03/raw/824eccfd182574757e3151d9ead3ef7f75f093d4/preview.png
 
 # rollup-plugin-output-size
 
@@ -12,7 +13,7 @@ A Rollup plugin that displays output bundle sizes.
 
 > This project was inspired by [rollup-plugin-bundle-size](https://github.com/vimeo/rollup-plugin-bundle-size).
 
-![rollup-plugin-output-size example output](preview.png)
+![rollup-plugin-output-size example output][preview-img]
 
 ## Install
 
@@ -89,6 +90,10 @@ Display summary output.
 - Set a callback to override default summary output.
 
 > See types in [`summary.types.ts`](src/types/summary.types.ts).
+
+> [!NOTE]
+>
+> The total gzip size of the summary output may not be entirely accurate as it is only the sum of all the individual output gzip sizes. If you need a more accurate size, you can use [archiver](https://www.npmjs.com/package/archiver) to create an archive with all output contents and get the gzip size of that instead.
 
 ### handle
 
