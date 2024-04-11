@@ -34,4 +34,13 @@ describe('summarize', () => {
     const raw = stripAnsi(formatted);
     expect(raw).to.equal('[total] 40 B + 30 B + 20 B = 90 B');
   });
+
+  it('should handle no type sizes (total only)', () => {
+    const sizes: SummarySizes = { total: { size: 90, hSize: '90 B' } };
+    const summary: Summary = { ...sizes, gzip: sizes };
+    const formatted = summarize(summary);
+    expect(formatted).to.be.a('string');
+    const raw = stripAnsi(formatted);
+    expect(raw).to.equal('[total] 90 B\n[total] 90 B (gzip)');
+  });
 });

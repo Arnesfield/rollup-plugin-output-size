@@ -5,11 +5,11 @@ import { Size } from './size.types.js';
 /** Summary sizes. */
 export interface SummarySizes {
   /** Asset total size. */
-  asset: Size;
+  asset?: Size;
   /** Chunk total size. */
-  chunk: Size;
+  chunk?: Size;
   /** Entry total size. */
-  entry: Size;
+  entry?: Size;
   /** Total size of all output types. */
   total: Size;
 }

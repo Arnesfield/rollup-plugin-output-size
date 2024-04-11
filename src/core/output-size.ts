@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import path from 'path';
 import prettyBytes from 'pretty-bytes';
 import { Plugin } from 'rollup';
@@ -76,17 +77,17 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
       const summary = { gzip: {} } as Summary;
       for (const type of types) {
         summary[type] = { size: 0, hSize: '0 B' };
-        (summary as Required<Summary>).gzip[type] = { size: 0, hSize: '0 B' };
+        summary.gzip![type] = { size: 0, hSize: '0 B' };
       }
       // set summary sizes
       for (const { info } of state.summaries) {
         summary.total.size += info.size;
-        summary[info.type].size += info.size;
+        summary[info.type]!.size += info.size;
         if (!summary.gzip) {
           // exclude gzip if an info does not have gzip size
         } else if (info.gzip) {
           summary.gzip.total.size += info.gzip.size;
-          summary.gzip[info.type].size += info.gzip.size;
+          summary.gzip[info.type]!.size += info.gzip.size;
         } else {
           delete summary.gzip;
         }
@@ -94,8 +95,8 @@ export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
       // update hSizes
       const s = (size: Size) => (size.hSize = prettyBytes(size.size));
       for (const type of types) {
-        s(summary[type]);
-        summary.gzip && s(summary.gzip[type]);
+        s(summary[type]!);
+        summary.gzip && s(summary.gzip[type]!);
       }
       // display summary
       if (typeof summaryOpts === 'function') {

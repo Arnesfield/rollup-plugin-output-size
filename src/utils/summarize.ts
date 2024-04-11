@@ -10,7 +10,9 @@ import { Summary } from '../types/summary.types.js';
  */
 function line(sizes: string[], total: string) {
   return (
-    dim(green('[total] ')) + sizes.join(red(' + ')) + red(' = ') + yellow(total)
+    dim(green('[total] ')) +
+    (sizes.length > 0 ? sizes.join(red(' + ')) + red(' = ') : '') +
+    yellow(total)
   );
 }
 
@@ -26,11 +28,12 @@ export function summarize(summary: Summary): string {
   for (const type of OUTPUT_TYPES) {
     const color = COLOR[type];
     const item = summary[type];
-    if (item.size > 0) {
+    const gzipItem = gzip && gzip[type];
+    if (item && item.size > 0) {
       sizes.push(color(item.hSize));
     }
-    if (gzip && gzip[type].size > 0) {
-      gzipSizes.push(color(gzip[type].hSize));
+    if (gzipItem && gzipItem.size > 0) {
+      gzipSizes.push(color(gzipItem.hSize));
     }
   }
   return (
