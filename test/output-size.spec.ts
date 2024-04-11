@@ -6,14 +6,14 @@ import { spy } from 'sinon';
 import { fileURLToPath } from 'url';
 import { OUTPUT_TYPES } from '../src/constants.js';
 import {
+  Options,
   OutputInfo,
   outputSize,
   OutputType,
-  RollupOutputSizeOptions,
   SummaryCallback
 } from '../src/index.js';
 
-type Handle = Exclude<RollupOutputSizeOptions['handle'], undefined>;
+type Handle = Exclude<Options['handle'], undefined>;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

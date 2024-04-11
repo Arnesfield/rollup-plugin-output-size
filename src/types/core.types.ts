@@ -2,10 +2,8 @@ import { OutputBundle } from 'rollup';
 import { OutputInfo, OutputType } from './output.types.js';
 import { SummaryCallback } from './summary.types.js';
 
-/**
- * Rollup plugin output size options.
- */
-export interface RollupOutputSizeOptions {
+/** The plugin options. */
+export interface Options {
   /**
    * Disable output types display.
    *
@@ -32,10 +30,9 @@ export interface RollupOutputSizeOptions {
   silent?: boolean;
   /**
    * Display summary output.
-   *
-   * Set to `false` to disable summary output.
-   * Set to `'always'` to force summary output even if there is only one (1) output.
-   * Set a callback to override default summary output.
+   * - Set to `false` to disable summary output.
+   * - Set to `'always'` to force summary output even if there is only one (1) output.
+   * - Set a callback to override default summary output.
    * @default true
    */
   summary?: boolean | 'always' | SummaryCallback;
@@ -49,3 +46,6 @@ export interface RollupOutputSizeOptions {
     output: OutputBundle[keyof OutputBundle]
   ): void | Promise<void>;
 }
+
+/** @deprecated since v1.4.0. Use {@linkcode Options} instead. */
+export type RollupOutputSizeOptions = Options;

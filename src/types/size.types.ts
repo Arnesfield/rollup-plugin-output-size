@@ -1,4 +1,4 @@
-/** Size object. */
+/** Size. */
 export interface Size {
   /** The size. */
   size: number;

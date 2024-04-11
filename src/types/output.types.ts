@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type { RollupOutputSizeOptions } from './core.types.js';
+import type { Options } from './core.types.js';
 import { Size } from './size.types.js';
 
 /**
@@ -18,7 +18,7 @@ export interface OutputInfo extends Size {
   type: OutputType;
   /**
    * The gzipped size of the output. Provided unless the
-   * {@linkcode RollupOutputSizeOptions.gzip gzip} option is set to `false`.
+   * {@linkcode Options.gzip gzip} option is set to `false`.
    */
   gzip?: Size;
 }

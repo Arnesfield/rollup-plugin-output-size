@@ -3,7 +3,7 @@ import path from 'path';
 import prettyBytes from 'pretty-bytes';
 import { Plugin } from 'rollup';
 import { OUTPUT_TYPES } from '../constants.js';
-import { RollupOutputSizeOptions } from '../types/core.types.js';
+import { Options } from '../types/core.types.js';
 import { OutputInfo } from '../types/output.types.js';
 import { Size } from '../types/size.types.js';
 import { Summary, SummaryOutput } from '../types/summary.types.js';
@@ -14,9 +14,9 @@ import { summarize } from '../utils/summarize.js';
 /**
  * A Rollup plugin that displays output bundle sizes.
  * @param options The plugin options.
- * @returns The Rollup plugin.
+ * @returns The plugin.
  */
-export function outputSize(options: RollupOutputSizeOptions = {}): Plugin {
+export function outputSize(options: Options = {}): Plugin {
   const hide = Array.isArray(options.hide) ? options.hide : options.hide || [];
   const gzipOpts = Array.isArray(options.gzip)
     ? options.gzip
