@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import stripAnsi from 'strip-ansi';
-import { summarize, Summary, SummarySizes } from '../src';
+import { summarize, Summary, SummarySizes } from '../src/index.js';
 
 describe('summarize', () => {
   it('should be a function', () => {

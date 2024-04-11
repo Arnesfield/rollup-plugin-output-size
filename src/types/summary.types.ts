@@ -1,6 +1,6 @@
 import { OutputBundle } from 'rollup';
-import { OutputInfo } from './output.types';
-import { Size } from './size.types';
+import { OutputInfo } from './output.types.js';
+import { Size } from './size.types.js';
 
 /** Summary sizes. */
 export interface SummarySizes {

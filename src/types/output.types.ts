@@ -1,7 +1,6 @@
-import { OUTPUT_TYPES } from '../constants';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type { RollupOutputSizeOptions } from './core.types';
-import { Size } from './size.types';
+import type { RollupOutputSizeOptions } from './core.types.js';
+import { Size } from './size.types.js';
 
 /**
  * Output type.
@@ -9,7 +8,7 @@ import { Size } from './size.types';
  * Both `chunk` and `entry` output types are `OutputChunk`s
  * but `entry` chunks have `isEntry` values of `true`.
  */
-export type OutputType = typeof OUTPUT_TYPES[number];
+export type OutputType = 'entry' | 'chunk' | 'asset';
 
 /** Output info. */
 export interface OutputInfo extends Size {

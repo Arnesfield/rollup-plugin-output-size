@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import stripAnsi from 'strip-ansi';
-import { format, OutputInfo } from '../src';
+import { format, OutputInfo } from '../src/index.js';
 
 describe('format', () => {
   it('should be a function', () => {

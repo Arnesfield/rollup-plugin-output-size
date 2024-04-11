@@ -1,6 +1,6 @@
 import { OutputBundle } from 'rollup';
-import { OutputInfo, OutputType } from './output.types';
-import { SummaryCallback } from './summary.types';
+import { OutputInfo, OutputType } from './output.types.js';
+import { SummaryCallback } from './summary.types.js';
 
 /**
  * Rollup plugin output size options.

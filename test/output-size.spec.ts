@@ -3,16 +3,20 @@ import path from 'path';
 import { rimraf } from 'rimraf';
 import { rollup, RollupOptions } from 'rollup';
 import { spy } from 'sinon';
+import { fileURLToPath } from 'url';
+import { OUTPUT_TYPES } from '../src/constants.js';
 import {
   OutputInfo,
   outputSize,
   OutputType,
   RollupOutputSizeOptions,
   SummaryCallback
-} from '../src';
-import { OUTPUT_TYPES } from '../src/constants';
+} from '../src/index.js';
 
 type Handle = Exclude<RollupOutputSizeOptions['handle'], undefined>;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function file(value: string) {
   return path.relative(process.cwd(), path.resolve(__dirname, value));
@@ -40,8 +44,8 @@ async function bundle(
   const outputs = Array.isArray(options.output)
     ? options.output
     : options.output
-    ? [options.output]
-    : [];
+      ? [options.output]
+      : [];
   await Promise.all(
     outputs.map(async output => {
       await build.generate(output);

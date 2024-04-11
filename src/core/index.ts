@@ -1,1 +1,1 @@
-export * from './output-size';
+export * from './output-size.js';

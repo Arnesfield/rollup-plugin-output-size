@@ -1,6 +1,6 @@
 import { dim, gray, red, yellow } from 'colorette';
-import { COLOR } from '../constants';
-import { OutputInfo } from '../types/output.types';
+import { COLOR } from '../constants.js';
+import { OutputInfo } from '../types/output.types.js';
 
 /**
  * Get the default display format of output info.

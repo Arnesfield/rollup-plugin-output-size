@@ -1,6 +1,6 @@
 import { gzipSize } from 'gzip-size';
 import prettyBytes from 'pretty-bytes';
-import { Size } from '../types/size.types';
+import { Size } from '../types/size.types.js';
 
 /**
  * Get the gzipped size of input.
