@@ -1,7 +1,12 @@
+[npm-img]: https://img.shields.io/npm/v/rollup-plugin-output-size.svg
+[npm-url]: https://www.npmjs.com/package/rollup-plugin-output-size
+[ci-img]: https://github.com/Arnesfield/rollup-plugin-output-size/workflows/Node.js%20CI/badge.svg
+[ci-url]: https://github.com/Arnesfield/rollup-plugin-output-size/actions?query=workflow%3A"Node.js+CI"
+
 # rollup-plugin-output-size
 
-[![npm](https://img.shields.io/npm/v/rollup-plugin-output-size.svg)](https://www.npmjs.com/package/rollup-plugin-output-size)
-[![Node.js CI](https://github.com/Arnesfield/rollup-plugin-output-size/workflows/Node.js%20CI/badge.svg)](https://github.com/Arnesfield/rollup-plugin-output-size/actions?query=workflow%3A"Node.js+CI")
+[![npm][npm-img]][npm-url]
+[![Node.js CI][ci-img]][ci-url]
 
 A Rollup plugin that displays output bundle sizes.
 
@@ -18,7 +23,7 @@ npm install --save-dev rollup-plugin-output-size
 ## Usage
 
 ```javascript
-// ES6
+// ESM
 import outputSize from 'rollup-plugin-output-size';
 
 // CommonJS
