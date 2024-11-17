@@ -42,13 +42,12 @@
     "build": "npm run all -- npm:bundle npm:check",
     "prebundle": "rimraf lib",
     "bundle": "rollup -c rollup.config.ts --configPlugin \"esbuild={target:'esnext'}\"",
-    "check": "npm run all -- \"npm:lint -- --max-warnings 0\" \"tsc --skipLibCheck\"",
+    "check": "npm run all -- \"npm:lint -- --max-warnings 0\" tsc",
     "format": "npm run lint -- --fix && prettier -cw .",
     "lint": "eslint . --ext .js,.ts",
-    "start": "npm run watch -- --environment NODE_ENV:development",
+    "start": "npm run bundle -- -w --no-watch.clearScreen",
     "test": "npm run all -- mocha npm:check",
-    "test:watch": "mocha -w",
-    "watch": "npm run bundle -- -w --no-watch.clearScreen"
+    "test:watch": "mocha -w"
   },
   "dependencies": {
     "colorette": "^2.0.20",
