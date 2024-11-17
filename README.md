@@ -2,7 +2,7 @@
 [npm-url]: https://www.npmjs.com/package/rollup-plugin-output-size
 [ci-img]: https://github.com/Arnesfield/rollup-plugin-output-size/workflows/Node.js%20CI/badge.svg
 [ci-url]: https://github.com/Arnesfield/rollup-plugin-output-size/actions?query=workflow%3A"Node.js+CI"
-[preview-img]: https://gist.githubusercontent.com/Arnesfield/0f85b2ddfa1109aec6ed2ec46ee42b03/raw/824eccfd182574757e3151d9ead3ef7f75f093d4/preview.png
+[preview-img]: https://gist.githubusercontent.com/Arnesfield/0f85b2ddfa1109aec6ed2ec46ee42b03/raw/99ab51e40bc68145e70e04903ebb6b24c0051ccb/preview.png
 
 # rollup-plugin-output-size
 
