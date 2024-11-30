@@ -1,3 +1,4 @@
+// @ts-check
 module.exports = {
   require: 'tsx',
   spec: ['**/*.spec.ts'],
