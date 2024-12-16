@@ -96,7 +96,7 @@
   },
   "overrides": {
     "@rollup/plugin-eslint": {
-      "eslint": "^9"
+      "eslint": "$eslint"
     }
   }
 }

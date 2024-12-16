@@ -5,7 +5,7 @@ import _typescript from '@rollup/plugin-typescript';
 import { PluginImpl, RollupOptions } from 'rollup';
 import cleanup from 'rollup-plugin-cleanup';
 import _dts, { Options as DtsOptions } from 'rollup-plugin-dts';
-import _esbuild, { Options as EsbuildOption } from 'rollup-plugin-esbuild';
+import _esbuild, { Options as EsbuildOptions } from 'rollup-plugin-esbuild';
 import nodeExternals from 'rollup-plugin-node-externals';
 import pkg from './package.json' with { type: 'json' };
 import outputSize from './src/index.js';
@@ -17,7 +17,7 @@ const nodeResolve = _nodeResolve as unknown as typeof _nodeResolve.default;
 const typescript = _typescript as unknown as typeof _typescript.default;
 // for some reason, typescript rollup plugin doesn't recognize these properly
 const dts = _dts as unknown as PluginImpl<DtsOptions>;
-const esbuild = _esbuild as unknown as PluginImpl<EsbuildOption>;
+const esbuild = _esbuild as unknown as PluginImpl<EsbuildOptions>;
 
 const WATCH = process.env.ROLLUP_WATCH === 'true';
 const input = 'src/index.ts';

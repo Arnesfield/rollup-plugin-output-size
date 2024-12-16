@@ -36,10 +36,15 @@ export default tseslint.config(
       curly: 'warn',
       eqeqeq: ['warn', 'always', { null: 'ignore' }],
       'no-constant-condition': 'warn',
+      'no-empty': 'warn',
       'no-throw-literal': 'warn',
       'no-unused-expressions': 'off', // use typescript-eslint
+      'no-unused-private-class-members': 'warn',
       'no-unused-vars': 'off', // use typescript-eslint
+      'no-useless-assignment': 'warn',
+      'no-useless-rename': 'warn',
       'no-var': 'warn',
+      'object-shorthand': 'warn',
       'prefer-const': 'warn',
       quotes: ['warn', 'single', 'avoid-escape'],
       semi: 'warn'
