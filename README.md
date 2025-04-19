@@ -52,14 +52,14 @@ You can change and override the behavior of this plugin through its options. Not
 Type: `boolean`<br>
 Default: `false`
 
-Display the byte size instead of the human-readable size for both the output info and [`summary`](#summary) output.
+Displays the byte size instead of the human-readable size for both the output info and [`summary`](#summary) output.
 
 ### hide
 
 Type: `boolean | OutputType[]`<br>
 Default: `false`
 
-Disable output types display.
+Disables output types display.
 
 Set to `true` to disable output for all output types, or set an array to specify which output types will not be displayed.
 
@@ -74,7 +74,7 @@ This option does not affect [`summary`](#summary) output.
 Type: `boolean | OutputType[]`<br>
 Default: `true`
 
-Get gzipped sizes of output.
+Gets gzipped sizes of output.
 
 Set to `false` to skip getting gzipped size, or set an array to only get gzipped sizes of specified output types.
 
@@ -83,14 +83,14 @@ Set to `false` to skip getting gzipped size, or set an array to only get gzipped
 Type: `boolean`<br>
 Default: `false`
 
-Disable output. This will also skip the [`handle`](#handle) and [`summary`](#summary) callbacks.
+Disables output. This will also skip the [`handle`](#handle) and [`summary`](#summary) callbacks.
 
 ### summary
 
 Type: `boolean | 'always' | SummaryCallback`<br>
 Default: `true`
 
-Display summary output.
+Displays summary output.
 
 - Set to `false` to disable summary output.
 - Set to `'always'` to force summary output even if there is only one (1) output.
@@ -106,7 +106,7 @@ Display summary output.
 
 Type: `(info: OutputInfo, output: OutputAsset | OutputChunk) => void | Promise<void>`
 
-Override the default logging of output info.
+Overrides the default logging of output info.
 
 The second argument `output` is the current Rollup output asset or chunk to log, while the first argument is the `OutputInfo`.
 
@@ -120,7 +120,7 @@ This package also includes some utility functions that you may find helpful, esp
 
 Type: `(info: OutputInfo, options?: Pick<Options, "bytes">) => string`
 
-Used to get the default display format of output info.
+Gets the default display format of output info.
 
 ```javascript
 import outputSize, { format } from 'rollup-plugin-output-size';
@@ -146,7 +146,7 @@ export default {
 
 Type: `(input: string | Uint8Array) => Promise<Size>`
 
-Used to get the gzipped size of input.
+Gets the gzipped size of input.
 
 ```javascript
 import outputSize, { gzip } from 'rollup-plugin-output-size';
@@ -171,7 +171,7 @@ export default {
 
 Type: `(summary: Summary, options?: Pick<Options, "bytes">) => string`
 
-Used to get the default display format of summary info.
+Gets the default display format of summary info.
 
 ```javascript
 import outputSize, { summarize } from 'rollup-plugin-output-size';
