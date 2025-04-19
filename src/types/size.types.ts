@@ -1,6 +1,6 @@
 /** Size. */
 export interface Size {
-  /** The size. */
+  /** Byte size. */
   size: number;
   /** Human-readable size. */
   hSize: string;

@@ -29,7 +29,7 @@ export interface SummaryOutput {
 }
 
 /**
- * Override summary output.
+ * Overrides the summary output.
  * @param summary The summary info.
  * @param outputs List of summary output.
  */

@@ -4,7 +4,7 @@ import { Options } from '../types/core.types.js';
 import { Summary } from '../types/summary.types.js';
 
 /**
- * Create summary line.
+ * Creates the summary line.
  * @param sizes Sizes to display.
  * @param total Total size.
  * @returns The summary line.
@@ -18,7 +18,7 @@ function line(sizes: string[], total: string | number) {
 }
 
 /**
- * Get the default display format of summary info.
+ * Gets the default display format of summary info.
  * @param summary The summary info.
  * @param options The summary options.
  * @returns The summary format.

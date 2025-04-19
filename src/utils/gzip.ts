@@ -6,7 +6,7 @@ import { Size } from '../types/size.types.js';
 const _gzip = promisify(__gzip);
 
 /**
- * Get the gzipped size of input.
+ * Gets the gzipped size of input.
  * @param input The input to use.
  * @returns The gzipped size.
  */

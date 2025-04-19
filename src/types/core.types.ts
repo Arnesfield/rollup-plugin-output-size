@@ -5,13 +5,13 @@ import { SummaryCallback } from './summary.types.js';
 /** The plugin options. */
 export interface Options {
   /**
-   * Display the byte size instead of the human-readable size
+   * Displays the byte size instead of the human-readable size
    * for both the output info and summary output.
    * @default false
    */
   bytes?: boolean;
   /**
-   * Disable output types display.
+   * Disables output types display.
    *
    * Set to `true` to disable output for output types, or set
    * an array to specify which output types will not be displayed.
@@ -21,7 +21,7 @@ export interface Options {
    */
   hide?: boolean | OutputType[];
   /**
-   * Get gzipped sizes of output.
+   * Gets gzipped sizes of output.
    *
    * Set to `false` to skip getting gzipped size, or set an
    * array to only get gzipped sizes of specified output types.
@@ -29,13 +29,13 @@ export interface Options {
    */
   gzip?: boolean | OutputType[];
   /**
-   * Disable output. This will also skip the
+   * Disables output. This will also skip the
    * {@linkcode handle} and {@linkcode summary} callbacks.
    * @default false
    */
   silent?: boolean;
   /**
-   * Display summary output.
+   * Displays summary output.
    * - Set to `false` to disable summary output.
    * - Set to `'always'` to force summary output even if there is only one (1) output.
    * - Set a callback to override default summary output.
@@ -43,7 +43,7 @@ export interface Options {
    */
   summary?: boolean | 'always' | SummaryCallback;
   /**
-   * Override the default logging of output info.
+   * Overrides the default logging of output info.
    * @param info The output info (name, size, etc.)
    * @param output The Rollup output chunk or asset.
    */

@@ -4,7 +4,7 @@ import { Options } from '../types/core.types.js';
 import { OutputInfo } from '../types/output.types.js';
 
 /**
- * Get the default display format of output info.
+ * Gets the default display format of output info.
  * @param info The output info.
  * @param options The format options.
  * @returns The display format.
