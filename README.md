@@ -47,6 +47,13 @@ export default {
 
 You can change and override the behavior of this plugin through its options. Note that all options are optional.
 
+### bytes
+
+Type: `boolean`<br>
+Default: `false`
+
+Display the byte size instead of the human-readable size for both the output info and [`summary`](#summary) output.
+
 ### hide
 
 Type: `boolean | OutputType[]`<br>
@@ -111,7 +118,7 @@ This package also includes some utility functions that you may find helpful, esp
 
 ### format
 
-Type: `(info: OutputInfo) => string`
+Type: `(info: OutputInfo, options?: Pick<Options, "bytes">) => string`
 
 Used to get the default display format of output info.
 
@@ -162,7 +169,7 @@ export default {
 
 ### summarize
 
-Type: `(summary: Summary) => string`
+Type: `(summary: Summary, options?: Pick<Options, "bytes">) => string`
 
 Used to get the default display format of summary info.
 

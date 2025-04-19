@@ -62,7 +62,7 @@ export function outputSize(options: Options = {}): Plugin {
         } else if (typeof options.handle === 'function') {
           await options.handle(info, output);
         } else {
-          console.log(format(info));
+          console.log(format(info, options));
         }
       }
     },
@@ -102,7 +102,7 @@ export function outputSize(options: Options = {}): Plugin {
         await summaryOpts(summary, state.summaries);
       } else if (summaryOpts === 'always' || state.summaries.length > 1) {
         // by default, show summary only if more than 1 output
-        console.log(summarize(summary));
+        console.log(summarize(summary, options));
       }
     }
   };

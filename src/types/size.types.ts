@@ -2,6 +2,6 @@
 export interface Size {
   /** The size. */
   size: number;
-  /** Human readable size. */
+  /** Human-readable size. */
   hSize: string;
 }
