@@ -1,23 +1,14 @@
-import _commonjs from '@rollup/plugin-commonjs';
-import _eslint from '@rollup/plugin-eslint';
-import _nodeResolve from '@rollup/plugin-node-resolve';
-import _typescript from '@rollup/plugin-typescript';
-import { PluginImpl, RollupOptions } from 'rollup';
+import commonjs from '@rollup/plugin-commonjs';
+import eslint from '@rollup/plugin-eslint';
+import nodeResolve from '@rollup/plugin-node-resolve';
+import typescript from '@rollup/plugin-typescript';
+import { RollupOptions } from 'rollup';
 import cleanup from 'rollup-plugin-cleanup';
-import _dts, { Options as DtsOptions } from 'rollup-plugin-dts';
-import _esbuild, { Options as EsbuildOptions } from 'rollup-plugin-esbuild';
+import dts from 'rollup-plugin-dts';
+import esbuild from 'rollup-plugin-esbuild';
 import nodeExternals from 'rollup-plugin-node-externals';
 import pkg from './package.json' with { type: 'json' };
 import outputSize from './src/index.js';
-
-// NOTE: remove once import errors are fixed for their respective packages
-const commonjs = _commonjs as unknown as typeof _commonjs.default;
-const eslint = _eslint as unknown as typeof _eslint.default;
-const nodeResolve = _nodeResolve as unknown as typeof _nodeResolve.default;
-const typescript = _typescript as unknown as typeof _typescript.default;
-// for some reason, typescript rollup plugin doesn't recognize these properly
-const dts = _dts as unknown as PluginImpl<DtsOptions>;
-const esbuild = _esbuild as unknown as PluginImpl<EsbuildOptions>;
 
 const WATCH = process.env.ROLLUP_WATCH === 'true';
 const input = 'src/index.ts';
