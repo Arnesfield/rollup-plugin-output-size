@@ -1,7 +1,7 @@
 import prettyBytes from 'pretty-bytes';
 import { promisify } from 'util';
 import { gzip as __gzip } from 'zlib';
-import { Size } from '../types/size.types.js';
+import { Size } from '../types/size.types';
 
 const _gzip = promisify(__gzip);
 

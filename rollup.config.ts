@@ -8,7 +8,7 @@ import dts from 'rollup-plugin-dts';
 import esbuild from 'rollup-plugin-esbuild';
 import nodeExternals from 'rollup-plugin-node-externals';
 import pkg from './package.json' with { type: 'json' };
-import outputSize from './src/index.js';
+import outputSize from './src';
 
 const WATCH = process.env.ROLLUP_WATCH === 'true';
 const input = 'src/index.ts';

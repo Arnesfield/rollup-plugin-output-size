@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { gzip } from '../src/index.js';
+import { gzip } from '../src';
 
 describe('gzip', () => {
   it('should be a function', () => {
