@@ -1,7 +1,7 @@
 import { dim, gray, green, red, yellow } from 'colorette';
-import { COLOR, OUTPUT_TYPES } from '../constants.js';
-import { Options } from '../types/core.types.js';
-import { Summary } from '../types/summary.types.js';
+import { COLOR, OUTPUT_TYPES } from '../constants';
+import { Options } from '../types/core.types';
+import { Summary } from '../types/summary.types';
 
 /**
  * Creates the summary line.

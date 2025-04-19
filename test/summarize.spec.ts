@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import stripAnsi from 'strip-ansi';
-import { summarize, Summary, SummarySizes } from '../src/index.js';
+import { summarize, Summary, SummarySizes } from '../src';
 
 function getSizes(): SummarySizes {
   return {

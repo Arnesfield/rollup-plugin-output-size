@@ -1,3 +1,3 @@
-export * from './format.js';
-export * from './gzip.js';
-export * from './summarize.js';
+export * from './format';
+export * from './gzip';
+export * from './summarize';

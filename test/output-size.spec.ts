@@ -4,14 +4,14 @@ import { rimraf } from 'rimraf';
 import { rollup, RollupOptions } from 'rollup';
 import { spy } from 'sinon';
 import { fileURLToPath } from 'url';
-import { OUTPUT_TYPES } from '../src/constants.js';
+import { OUTPUT_TYPES } from '../src/constants';
 import {
   Options,
   OutputInfo,
   outputSize,
   OutputType,
   SummaryCallback
-} from '../src/index.js';
+} from '../src';
 
 type Handle = Exclude<Options['handle'], undefined>;
 

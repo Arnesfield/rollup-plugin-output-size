@@ -1,14 +1,14 @@
 import path from 'path';
 import prettyBytes from 'pretty-bytes';
 import { Plugin } from 'rollup';
-import { OUTPUT_TYPES } from '../constants.js';
-import { Options } from '../types/core.types.js';
-import { OutputInfo } from '../types/output.types.js';
-import { Size } from '../types/size.types.js';
-import { Summary, SummaryOutput } from '../types/summary.types.js';
-import { format } from '../utils/format.js';
-import { gzip as getGzip } from '../utils/gzip.js';
-import { summarize } from '../utils/summarize.js';
+import { OUTPUT_TYPES } from '../constants';
+import { Options } from '../types/core.types';
+import { OutputInfo } from '../types/output.types';
+import { Size } from '../types/size.types';
+import { Summary, SummaryOutput } from '../types/summary.types';
+import { format } from '../utils/format';
+import { gzip as getGzip } from '../utils/gzip';
+import { summarize } from '../utils/summarize';
 
 /**
  * A Rollup plugin that displays output bundle sizes.

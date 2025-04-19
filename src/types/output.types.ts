@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type { Options } from './core.types.js';
-import { Size } from './size.types.js';
+import type { Options } from './core.types';
+import { Size } from './size.types';
 
 /**
  * Output type.
