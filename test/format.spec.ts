@@ -31,4 +31,15 @@ describe('format', () => {
     const raw = stripAnsi(format(info));
     expect(raw).to.equal('[asset] out/test/asset.js.map is 100 B');
   });
+
+  it('should display bytes when the option is enabled', () => {
+    const info: OutputInfo = {
+      path: 'out/test/entry.js',
+      type: 'entry',
+      size: 100,
+      hSize: '100 B'
+    };
+    const raw = stripAnsi(format(info, { bytes: true }));
+    expect(raw).to.equal('[entry] out/test/entry.js is 100');
+  });
 });

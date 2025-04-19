@@ -5,6 +5,12 @@ import { SummaryCallback } from './summary.types.js';
 /** The plugin options. */
 export interface Options {
   /**
+   * Display the byte size instead of the human-readable size
+   * for both the output info and summary output.
+   * @default false
+   */
+  bytes?: boolean;
+  /**
    * Disable output types display.
    *
    * Set to `true` to disable output for output types, or set
