@@ -25,6 +25,7 @@ const input = 'src/index.ts';
 const esmExternals = ['pretty-bytes'];
 // disable sourcemaps (enable only for preview)
 const preview = false;
+const bytes = true;
 
 function build() {
   return esbuild({ target: 'esnext' });
@@ -37,6 +38,10 @@ function clean() {
   });
 }
 
+function size() {
+  return outputSize({ bytes });
+}
+
 function defineConfig(options: (false | RollupOptions)[]) {
   return options.filter((options): options is RollupOptions => !!options);
 }
@@ -45,7 +50,7 @@ export default defineConfig([
   {
     input,
     output: { file: pkg.module, format: 'esm', sourcemap: preview },
-    plugins: [build(), clean(), nodeExternals(), outputSize()]
+    plugins: [build(), clean(), nodeExternals(), size()]
   },
   {
     input,
@@ -66,13 +71,13 @@ export default defineConfig([
       // exclude esm dependencies from external
       // since they will be bundled into vendor.cjs
       nodeExternals({ exclude: esmExternals }),
-      outputSize()
+      size()
     ]
   },
   {
     input,
     output: { file: pkg.types, format: 'esm' },
-    plugins: [dts(), outputSize()]
+    plugins: [dts(), size()]
   },
   WATCH && {
     input,
