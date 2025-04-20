@@ -5,9 +5,10 @@ import { SummaryCallback } from './summary.types';
 /** The plugin options. */
 export interface Options {
   /**
-   * Displays the byte size instead of the human-readable size
-   * for both the output info and summary output.
+   * Displays the size in bytes for both the output info and summary output
+   * (e.g. `4,096 B` instead of `4.1 kB`).
    * @default false
+   * @since v1.6.0
    */
   bytes?: boolean;
   /**

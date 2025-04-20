@@ -52,7 +52,7 @@ You can change and override the behavior of this plugin through its options. Not
 Type: `boolean`<br>
 Default: `false`
 
-Displays the byte size instead of the human-readable size for both the output info and [`summary`](#summary) output.
+Displays the size in bytes for both the output info and [`summary`](#summary) output (e.g. `4,096 B` instead of `4.1 kB`).
 
 ### hide
 

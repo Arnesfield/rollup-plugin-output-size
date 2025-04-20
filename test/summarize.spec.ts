@@ -1,14 +1,14 @@
 import { expect } from 'chai';
+import prettyBytes from 'pretty-bytes';
 import stripAnsi from 'strip-ansi';
-import { summarize, Summary, SummarySizes } from '../src';
+import { Size, summarize, Summary, SummarySizes } from '../src';
+
+function size(size: number): Size {
+  return { size, hSize: prettyBytes(size) };
+}
 
 function getSizes(): SummarySizes {
-  return {
-    asset: { size: 20, hSize: '20 B' },
-    chunk: { size: 30, hSize: '30 B' },
-    entry: { size: 40, hSize: '40 B' },
-    total: { size: 90, hSize: '90 B' }
-  };
+  return { asset: size(20), chunk: size(30), entry: size(40), total: size(90) };
 }
 
 describe('summarize', () => {
@@ -44,10 +44,15 @@ describe('summarize', () => {
   });
 
   it('should display bytes when the option is enabled', () => {
-    const summary: Summary = getSizes();
+    const summary: Summary = {
+      asset: size(2000),
+      chunk: size(3000),
+      entry: size(4000),
+      total: size(9000)
+    };
     const formatted = summarize(summary, { bytes: true });
     expect(formatted).to.be.a('string');
     const raw = stripAnsi(formatted);
-    expect(raw).to.equal('[total] 40 + 30 + 20 = 90');
+    expect(raw).to.equal('[total] 4,000 B + 3,000 B + 2,000 B = 9,000 B');
   });
 });
