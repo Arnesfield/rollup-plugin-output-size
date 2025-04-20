@@ -1,7 +1,7 @@
 import path from 'path';
 import prettyBytes from 'pretty-bytes';
 import { Plugin } from 'rollup';
-import { OUTPUT_TYPES } from '../constants';
+import { TYPES } from '../constants';
 import { Options } from '../types/core.types';
 import { OutputInfo } from '../types/output.types';
 import { Size } from '../types/size.types';
@@ -20,29 +20,27 @@ export function outputSize(options: Options = {}): Plugin {
   const gzipOpts = Array.isArray(options.gzip)
     ? options.gzip
     : options.gzip == null || !!options.gzip || [];
-  const summaryOpts =
-    typeof options.summary === 'function'
-      ? options.summary
-      : options.summary == null || options.summary;
-  const state = { summaries: [] as SummaryOutput[], didSummarize: false };
+  const summaryOpts = options.summary == null || options.summary;
+
+  let summaries: SummaryOutput[];
+  let didSummarize: boolean;
+
   return {
     name: 'output-size',
     outputOptions() {
-      state.summaries = [];
-      state.didSummarize = false;
+      summaries = [];
+      didSummarize = false;
     },
     async generateBundle(outputOpts, bundle) {
-      if (options.silent) {
-        return;
-      }
+      if (options.silent) return;
+
       for (const output of Object.values(bundle)) {
         const isChunk = output.type === 'chunk';
         const type = isChunk && output.isEntry ? 'entry' : output.type;
         const shouldHide = hide === true || hide.includes(type);
         // skip other checks if no summary is required
-        if (!summaryOpts && shouldHide) {
-          continue;
-        }
+        if (!summaryOpts && shouldHide) continue;
+
         const data = isChunk ? output.code : output.source;
         const size =
           typeof data === 'string' ? Buffer.byteLength(data) : data.byteLength;
@@ -56,7 +54,8 @@ export function outputSize(options: Options = {}): Plugin {
           output.fileName
         );
         const info: OutputInfo = { path: filePath, type, size, hSize, gzip };
-        state.summaries.push({ info, output });
+        summaries.push({ info, output });
+
         if (shouldHide) {
           // do nothing
         } else if (typeof options.handle === 'function') {
@@ -67,19 +66,18 @@ export function outputSize(options: Options = {}): Plugin {
       }
     },
     async writeBundle() {
-      if (state.didSummarize || !summaryOpts || options.silent) {
-        return;
-      }
-      state.didSummarize = true;
+      if (didSummarize || !summaryOpts || options.silent) return;
+      didSummarize = true;
+
       // create summary
-      const types = [...OUTPUT_TYPES, 'total'] as const;
       const summary = { gzip: {} } as Summary;
-      for (const type of types) {
+      for (const type of TYPES) {
         summary[type] = { size: 0, hSize: '0 B' };
         summary.gzip![type] = { size: 0, hSize: '0 B' };
       }
+
       // set summary sizes
-      for (const { info } of state.summaries) {
+      for (const { info } of summaries) {
         summary.total.size += info.size;
         summary[info.type]!.size += info.size;
         if (!summary.gzip) {
@@ -91,16 +89,18 @@ export function outputSize(options: Options = {}): Plugin {
           delete summary.gzip;
         }
       }
+
       // update hSizes
       const s = (size: Size) => (size.hSize = prettyBytes(size.size));
-      for (const type of types) {
+      for (const type of TYPES) {
         s(summary[type]!);
         summary.gzip && s(summary.gzip[type]!);
       }
-      // display summary
-      if (typeof summaryOpts === 'function') {
-        await summaryOpts(summary, state.summaries);
-      } else if (summaryOpts === 'always' || state.summaries.length > 1) {
+
+      // display summary (preserve `this` for callbacks)
+      if (typeof options.summary === 'function') {
+        await options.summary(summary, summaries);
+      } else if (summaryOpts === 'always' || summaries.length > 1) {
         // by default, show summary only if more than 1 output
         console.log(summarize(summary, options));
       }
