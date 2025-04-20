@@ -98,6 +98,21 @@ describe('options', () => {
       expect(handle.calledOnce).to.be.true;
     });
 
+    it("should reference the options object for 'this' keyword", async () => {
+      const handle = spy<Handle>(function (this: Options) {
+        expect(this).to.equal(options);
+      });
+      const options: Options = { handle };
+      const plugin = outputSize(options);
+      expect(handle.calledOnce).to.be.false;
+      await bundle({
+        input: inputs.add,
+        output: { dir: inputs.tmp },
+        plugins: [plugin]
+      });
+      expect(handle.calledOnce).to.be.true;
+    });
+
     it('should receive entry output type', async () => {
       const handle = spy<Handle>((info, output) => {
         expectOutputInfo(info);
@@ -274,6 +289,21 @@ describe('options', () => {
     it('should be called when writing build', async () => {
       const summary = spy<SummaryCallback>(() => {});
       const plugin = outputSize({ hide: true, summary });
+      expect(summary.calledOnce).to.be.false;
+      await bundle(true, {
+        input: inputs.add,
+        output: { dir: inputs.tmp },
+        plugins: [plugin]
+      });
+      expect(summary.calledOnce).to.be.true;
+    });
+
+    it("should reference the options object for 'this' keyword", async () => {
+      const summary = spy<SummaryCallback>(function (this: Options) {
+        expect(this).to.equal(options);
+      });
+      const options: Options = { hide: true, summary };
+      const plugin = outputSize(options);
       expect(summary.calledOnce).to.be.false;
       await bundle(true, {
         input: inputs.add,
