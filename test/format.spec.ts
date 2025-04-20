@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import prettyBytes from 'pretty-bytes';
 import stripAnsi from 'strip-ansi';
 import { format, OutputInfo } from '../src';
 
@@ -33,13 +34,24 @@ describe('format', () => {
   });
 
   it('should display bytes when the option is enabled', () => {
-    const info: OutputInfo = {
+    let size = 0;
+    let info: OutputInfo = {
       path: 'out/test/entry.js',
       type: 'entry',
-      size: 100,
-      hSize: '100 B'
+      size,
+      hSize: prettyBytes(size)
     };
-    const raw = stripAnsi(format(info, { bytes: true }));
-    expect(raw).to.equal('[entry] out/test/entry.js is 100');
+    let raw = stripAnsi(format(info, { bytes: true }));
+    expect(raw).to.equal('[entry] out/test/entry.js is 0 B');
+
+    size = 1234567890;
+    info = {
+      path: 'out/test/entry.js',
+      type: 'entry',
+      size,
+      hSize: prettyBytes(size)
+    };
+    raw = stripAnsi(format(info, { bytes: true }));
+    expect(raw).to.equal('[entry] out/test/entry.js is 1,234,567,890 B');
   });
 });

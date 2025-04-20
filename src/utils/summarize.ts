@@ -2,6 +2,7 @@ import { dim, gray, green, red, yellow } from 'colorette';
 import { COLOR, OUTPUT_TYPES } from '../constants';
 import { Options } from '../types/core.types';
 import { Summary } from '../types/summary.types';
+import { getSize } from './size';
 
 /**
  * Creates the summary line.
@@ -28,7 +29,6 @@ export function summarize(
   options: Pick<Options, 'bytes'> = {}
 ): string {
   const { gzip, total } = summary;
-  const prop = options.bytes ? 'size' : 'hSize';
   const sizes: string[] = [];
   const gzipSizes: string[] = [];
 
@@ -37,15 +37,17 @@ export function summarize(
     const item = summary[type];
     const gzipItem = gzip && gzip[type];
     if (item && item.size > 0) {
-      sizes.push(color(item[prop]));
+      sizes.push(color(getSize(item, options)));
     }
     if (gzipItem && gzipItem.size > 0) {
-      gzipSizes.push(color(gzipItem[prop]));
+      gzipSizes.push(color(getSize(gzipItem, options)));
     }
   }
 
   return (
-    line(sizes, total[prop]) +
-    (gzip ? '\n' + line(gzipSizes, gzip.total[prop]) + gray(' (gzip)') : '')
+    line(sizes, getSize(total, options)) +
+    (gzip
+      ? '\n' + line(gzipSizes, getSize(gzip.total, options)) + gray(' (gzip)')
+      : '')
   );
 }
