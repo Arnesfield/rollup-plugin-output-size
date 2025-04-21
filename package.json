@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-output-size",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "A Rollup plugin that displays output bundle sizes.",
   "keywords": [
     "rollup-plugin",
