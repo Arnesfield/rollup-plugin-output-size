@@ -17,7 +17,7 @@ export interface Options {
    * Set to `true` to disable output for output types, or set
    * an array to specify which output types will not be displayed.
    *
-   * This option does not affect {@linkcode summary} output.
+   * This option does not affect the {@linkcode summary} output.
    * @default false
    */
   hide?: boolean | OutputType[];
@@ -36,7 +36,7 @@ export interface Options {
    */
   silent?: boolean;
   /**
-   * Displays summary output.
+   * Displays the summary output.
    * - Set to `false` to disable summary output.
    * - Set to `'always'` to force summary output even if there is only one (1) output.
    * - Set a callback to override default summary output.
