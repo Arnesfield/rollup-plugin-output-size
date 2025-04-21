@@ -11,7 +11,7 @@
 
 A Rollup plugin that displays output bundle sizes.
 
-> This project was inspired by [rollup-plugin-bundle-size](https://github.com/vimeo/rollup-plugin-bundle-size).
+> This project was inspired by [rollup-plugin-bundle-size](https://www.npmjs.com/package/rollup-plugin-bundle-size).
 
 ![rollup-plugin-output-size example output][preview-img]
 
@@ -65,9 +65,9 @@ Set to `true` to disable output for all output types, or set an array to specify
 
 Output types are: `asset`, `chunk`, and `entry`.
 
-> Note: Both `chunk` and `entry` output types are `OutputChunk`s but `entry` chunks have `isEntry` values of `true`.
+Both `chunk` and `entry` output types are `OutputChunk`s but `entry` chunks have `isEntry` values of `true`.
 
-This option does not affect [`summary`](#summary) output.
+This option does not affect the [`summary`](#summary) output.
 
 ### gzip
 
@@ -90,7 +90,7 @@ Disables output. This will also skip the [`handle`](#handle) and [`summary`](#su
 Type: `boolean | 'always' | SummaryCallback`<br>
 Default: `true`
 
-Displays summary output.
+Displays the summary output.
 
 - Set to `false` to disable summary output.
 - Set to `'always'` to force summary output even if there is only one (1) output.
