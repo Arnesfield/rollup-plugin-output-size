@@ -54,5 +54,5 @@ export interface Options {
   ): void | Promise<void>;
 }
 
-/** @deprecated since v1.4.0. Use {@linkcode Options} instead. */
+/** @deprecated Since v1.4.0. Use {@linkcode Options} instead. */
 export type RollupOutputSizeOptions = Options;
