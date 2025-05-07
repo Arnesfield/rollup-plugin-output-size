@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import prettyBytes from 'pretty-bytes';
-import stripAnsi from 'strip-ansi';
+import util from 'util';
 import { Size, summarize, Summary, SummarySizes } from '../src';
 
 function size(size: number): Size {
@@ -21,7 +21,7 @@ describe('summarize', () => {
     const summary: Summary = { ...sizes, gzip: sizes };
     const formatted = summarize(summary);
     expect(formatted).to.be.a('string');
-    const raw = stripAnsi(formatted);
+    const raw = util.stripVTControlCharacters(formatted);
     const text = '[total] 40 B + 30 B + 20 B = 90 B';
     expect(raw).to.equal(`${text}\n${text} (gzip)`);
   });
@@ -30,7 +30,7 @@ describe('summarize', () => {
     const summary: Summary = getSizes();
     const formatted = summarize(summary);
     expect(formatted).to.be.a('string');
-    const raw = stripAnsi(formatted);
+    const raw = util.stripVTControlCharacters(formatted);
     expect(raw).to.equal('[total] 40 B + 30 B + 20 B = 90 B');
   });
 
@@ -39,7 +39,7 @@ describe('summarize', () => {
     const summary: Summary = { ...sizes, gzip: sizes };
     const formatted = summarize(summary);
     expect(formatted).to.be.a('string');
-    const raw = stripAnsi(formatted);
+    const raw = util.stripVTControlCharacters(formatted);
     expect(raw).to.equal('[total] 90 B\n[total] 90 B (gzip)');
   });
 
@@ -52,7 +52,7 @@ describe('summarize', () => {
     };
     const formatted = summarize(summary, { bytes: true });
     expect(formatted).to.be.a('string');
-    const raw = stripAnsi(formatted);
+    const raw = util.stripVTControlCharacters(formatted);
     expect(raw).to.equal('[total] 4,000 B + 3,000 B + 2,000 B = 9,000 B');
   });
 });

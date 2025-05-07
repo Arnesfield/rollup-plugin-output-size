@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import prettyBytes from 'pretty-bytes';
-import stripAnsi from 'strip-ansi';
+import util from 'util';
 import { format, OutputInfo } from '../src';
 
 describe('format', () => {
@@ -18,7 +18,7 @@ describe('format', () => {
     };
     const formatted = format(info);
     expect(formatted).to.be.a('string');
-    const raw = stripAnsi(formatted);
+    const raw = util.stripVTControlCharacters(formatted);
     expect(raw).to.equal('[chunk] out/test/chunk.js is 30 B → 20 B (gzip)');
   });
 
@@ -29,7 +29,7 @@ describe('format', () => {
       size: 100,
       hSize: '100 B'
     };
-    const raw = stripAnsi(format(info));
+    const raw = util.stripVTControlCharacters(format(info));
     expect(raw).to.equal('[asset] out/test/asset.js.map is 100 B');
   });
 
@@ -41,7 +41,7 @@ describe('format', () => {
       size,
       hSize: prettyBytes(size)
     };
-    let raw = stripAnsi(format(info, { bytes: true }));
+    let raw = util.stripVTControlCharacters(format(info, { bytes: true }));
     expect(raw).to.equal('[entry] out/test/entry.js is 0 B');
 
     size = 1234567890;
@@ -51,7 +51,7 @@ describe('format', () => {
       size,
       hSize: prettyBytes(size)
     };
-    raw = stripAnsi(format(info, { bytes: true }));
+    raw = util.stripVTControlCharacters(format(info, { bytes: true }));
     expect(raw).to.equal('[entry] out/test/entry.js is 1,234,567,890 B');
   });
 });
