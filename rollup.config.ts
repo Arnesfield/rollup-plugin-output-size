@@ -1,4 +1,3 @@
-import commonjs from '@rollup/plugin-commonjs';
 import eslint from '@rollup/plugin-eslint';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
@@ -10,13 +9,15 @@ import nodeExternals from 'rollup-plugin-node-externals';
 import pkg from './package.json' with { type: 'json' };
 import outputSize from './src';
 
-const WATCH = process.env.ROLLUP_WATCH === 'true';
-const input = 'src/index.ts';
-// esm dependencies to bundle into vendor.cjs
-const esmExternals = ['pretty-bytes'];
 // disable sourcemaps (enable only for preview)
 const preview = false;
 const bytes = true;
+
+const WATCH = process.env.ROLLUP_WATCH === 'true';
+const input = 'src/index.ts';
+
+// esm dependencies to be bundled into the cjs build
+const esmExternals = ['pretty-bytes'];
 
 function build() {
   return esbuild({ target: 'esnext' });
@@ -52,15 +53,15 @@ export default defineConfig([
       sourcemap: preview,
       entryFileNames: '[name].cjs',
       chunkFileNames: '[name].cjs',
-      manualChunks: { vendor: esmExternals }
+      // for preview mode, create a separate chunk for esm externals
+      manualChunks: preview ? { vendor: esmExternals } : undefined
     },
     plugins: [
       build(),
       clean(),
-      commonjs(),
       nodeResolve(),
       // exclude esm dependencies from external
-      // since they will be bundled into vendor.cjs
+      // since they will be bundled into the cjs build
       nodeExternals({ exclude: esmExternals }),
       size()
     ]
