@@ -55,7 +55,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
-    "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-eslint": "^9.0.5",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-typescript": "^12.1.2",
