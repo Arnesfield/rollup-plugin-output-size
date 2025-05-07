@@ -1,9 +1,9 @@
 import prettyBytes from 'pretty-bytes';
-import { promisify } from 'util';
-import { gzip as __gzip } from 'zlib';
+import util from 'util';
+import zlib from 'zlib';
 import { Size } from '../types/size.types';
 
-const _gzip = promisify(__gzip);
+const _gzip = util.promisify(zlib.gzip);
 
 /**
  * Gets the gzipped size of input.
