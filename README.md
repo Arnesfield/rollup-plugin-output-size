@@ -1,13 +1,13 @@
+# rollup-plugin-output-size
+
+[![npm][npm-img]][npm-url]
+[![Node.js CI][ci-img]][ci-url]
+
 [npm-img]: https://img.shields.io/npm/v/rollup-plugin-output-size.svg
 [npm-url]: https://www.npmjs.com/package/rollup-plugin-output-size
 [ci-img]: https://github.com/Arnesfield/rollup-plugin-output-size/workflows/Node.js%20CI/badge.svg
 [ci-url]: https://github.com/Arnesfield/rollup-plugin-output-size/actions?query=workflow%3A"Node.js+CI"
 [preview-img]: https://gist.githubusercontent.com/Arnesfield/0f85b2ddfa1109aec6ed2ec46ee42b03/raw/7cc3b49fc8496cc71db41a0f273871636520a611/preview.png
-
-# rollup-plugin-output-size
-
-[![npm][npm-img]][npm-url]
-[![Node.js CI][ci-img]][ci-url]
 
 A Rollup plugin that displays output bundle sizes.
 
@@ -49,14 +49,14 @@ You can change and override the behavior of this plugin through its options. Not
 
 ### bytes
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `false`
 
 Displays the size in bytes for both the output info and [`summary`](#summary) output (e.g. `4,096 B` instead of `4.1 kB`).
 
 ### hide
 
-Type: `boolean | OutputType[]`<br>
+Type: `boolean | OutputType[]`\
 Default: `false`
 
 Disables output types display.
@@ -71,7 +71,7 @@ This option does not affect the [`summary`](#summary) output.
 
 ### gzip
 
-Type: `boolean | OutputType[]`<br>
+Type: `boolean | OutputType[]`\
 Default: `true`
 
 Gets gzipped sizes of output.
@@ -80,14 +80,14 @@ Set to `false` to skip getting gzipped size, or set an array to only get gzipped
 
 ### silent
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `false`
 
 Disables output. This will also skip the [`handle`](#handle) and [`summary`](#summary) callbacks.
 
 ### summary
 
-Type: `boolean | 'always' | SummaryCallback`<br>
+Type: `boolean | 'always' | SummaryCallback`\
 Default: `true`
 
 Displays the summary output.
