@@ -1,6 +1,6 @@
 import path from 'path';
 import { Plugin } from 'rollup';
-import { TYPES } from '../constants';
+import { KEYS } from '../constants';
 import { Options } from '../types/core.types';
 import { OutputInfo } from '../types/output.types';
 import { Size } from '../types/size.types';
@@ -71,9 +71,9 @@ export function outputSize(options: Options = {}): Plugin {
 
       // create summary
       const summary = { gzip: {} } as Summary;
-      for (const type of TYPES) {
-        summary[type] = { size: 0, hSize: '0 B' };
-        summary.gzip![type] = { size: 0, hSize: '0 B' };
+      for (const key of KEYS) {
+        summary[key] = { size: 0, hSize: '0 B' };
+        summary.gzip![key] = { size: 0, hSize: '0 B' };
       }
 
       // set summary sizes
@@ -92,9 +92,9 @@ export function outputSize(options: Options = {}): Plugin {
 
       // update hSizes
       const s = (size: Size) => (size.hSize = formatBytes(size.size));
-      for (const type of TYPES) {
-        s(summary[type]!);
-        summary.gzip && s(summary.gzip[type]!);
+      for (const key of KEYS) {
+        s(summary[key]!);
+        summary.gzip && s(summary.gzip[key]!);
       }
 
       // display summary (preserve `this` for callbacks)
