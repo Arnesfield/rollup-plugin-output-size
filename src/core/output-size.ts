@@ -1,5 +1,4 @@
 import path from 'path';
-import prettyBytes from 'pretty-bytes';
 import { Plugin } from 'rollup';
 import { TYPES } from '../constants';
 import { Options } from '../types/core.types';
@@ -7,6 +6,7 @@ import { OutputInfo } from '../types/output.types';
 import { Size } from '../types/size.types';
 import { Summary, SummaryOutput } from '../types/summary.types';
 import { format } from '../utils/format';
+import { formatBytes } from '../utils/format-bytes';
 import { gzip as getGzip } from '../utils/gzip';
 import { summarize } from '../utils/summarize';
 
@@ -44,7 +44,7 @@ export function outputSize(options: Options = {}): Plugin {
         const data = isChunk ? output.code : output.source;
         const size =
           typeof data === 'string' ? Buffer.byteLength(data) : data.byteLength;
-        const hSize = prettyBytes(size);
+        const hSize = formatBytes(size);
         const gzip =
           gzipOpts === true || gzipOpts.includes(type)
             ? await getGzip(data)
@@ -91,7 +91,7 @@ export function outputSize(options: Options = {}): Plugin {
       }
 
       // update hSizes
-      const s = (size: Size) => (size.hSize = prettyBytes(size.size));
+      const s = (size: Size) => (size.hSize = formatBytes(size.size));
       for (const type of TYPES) {
         s(summary[type]!);
         summary.gzip && s(summary.gzip[type]!);

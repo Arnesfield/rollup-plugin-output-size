@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import prettyBytes from 'pretty-bytes';
 import util from 'util';
 import { format, OutputInfo } from '../src';
+import { formatBytes } from '../src/utils/format-bytes';
 
 describe('format', () => {
   it('should be a function', () => {
@@ -39,7 +39,7 @@ describe('format', () => {
       path: 'out/test/entry.js',
       type: 'entry',
       size,
-      hSize: prettyBytes(size)
+      hSize: formatBytes(size)
     };
     let raw = util.stripVTControlCharacters(format(info, { bytes: true }));
     expect(raw).to.equal('[entry] out/test/entry.js is 0 B');
@@ -49,7 +49,7 @@ describe('format', () => {
       path: 'out/test/entry.js',
       type: 'entry',
       size,
-      hSize: prettyBytes(size)
+      hSize: formatBytes(size)
     };
     raw = util.stripVTControlCharacters(format(info, { bytes: true }));
     expect(raw).to.equal('[entry] out/test/entry.js is 1,234,567,890 B');
