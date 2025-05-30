@@ -4,7 +4,6 @@ import { rimraf } from 'rimraf';
 import { rollup, RollupOptions } from 'rollup';
 import { spy } from 'sinon';
 import { fileURLToPath } from 'url';
-import { OUTPUT_TYPES } from '../src/constants';
 import {
   Options,
   OutputInfo,
@@ -12,6 +11,7 @@ import {
   OutputType,
   SummaryCallback
 } from '../src';
+import { TYPES } from '../src/constants';
 
 type Handle = Exclude<Options['handle'], undefined>;
 
@@ -335,7 +335,7 @@ describe('options', () => {
         expect(summary).to.have.property('total').that.is.an('object');
         expect(summary).to.have.property('gzip').that.is.an('object');
         expect(summary.gzip).to.have.property('total').that.is.an('object');
-        for (const type of OUTPUT_TYPES) {
+        for (const type of TYPES) {
           expect(summary).to.have.property(type).that.is.an('object');
           expect(summary.gzip).to.have.property(type).that.is.an('object');
         }
@@ -372,7 +372,7 @@ describe('options', () => {
           expect(output).to.have.property('info').that.is.an('object');
           expect(output).to.have.property('output').that.is.an('object');
           expect(output.info).to.be.an('object');
-          expect(output.info.type).to.have.oneOf(OUTPUT_TYPES);
+          expect(output.info.type).to.have.oneOf(TYPES);
         }
       });
       const plugin = outputSize({ hide: true, gzip: ['asset'], summary });

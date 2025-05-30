@@ -1,5 +1,5 @@
 import util from 'util';
-import { COLOR, OUTPUT_TYPES } from '../constants';
+import { COLOR, TYPES } from '../constants';
 import { Options } from '../types/core.types';
 import { Summary } from '../types/summary.types';
 import { getSize } from './size';
@@ -34,7 +34,7 @@ export function summarize(
   const sizes: string[] = [];
   const gzipSizes: string[] = [];
 
-  for (const type of OUTPUT_TYPES) {
+  for (const type of TYPES) {
     const color = COLOR[type];
     const item = summary[type];
     const gzipItem = gzip && gzip[type];
