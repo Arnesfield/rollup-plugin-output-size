@@ -1,4 +1,4 @@
-import { dim, gray, red, yellow } from 'colorette';
+import util from 'util';
 import { COLOR } from '../constants';
 import { Options } from '../types/core.types';
 import { OutputInfo } from '../types/output.types';
@@ -15,10 +15,17 @@ export function format(
   options: Pick<Options, 'bytes'> = {}
 ): string {
   return (
-    COLOR[info.type](dim(`[${info.type}] `) + info.path + dim(' is ')) +
-    yellow(getSize(info, options)) +
+    util.styleText(
+      COLOR[info.type],
+      util.styleText('dim', `[${info.type}] `) +
+        info.path +
+        util.styleText('dim', ' is ')
+    ) +
+    util.styleText('yellow', getSize(info, options)) +
     (info.gzip
-      ? red(' → ') + yellow(getSize(info.gzip, options)) + gray(' (gzip)')
+      ? util.styleText('red', ' → ') +
+        util.styleText('yellow', getSize(info.gzip, options)) +
+        util.styleText('gray', ' (gzip)')
       : '')
   );
 }

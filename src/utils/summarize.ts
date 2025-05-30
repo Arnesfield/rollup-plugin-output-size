@@ -1,4 +1,4 @@
-import { dim, gray, green, red, yellow } from 'colorette';
+import util from 'util';
 import { COLOR, OUTPUT_TYPES } from '../constants';
 import { Options } from '../types/core.types';
 import { Summary } from '../types/summary.types';
@@ -10,11 +10,13 @@ import { getSize } from './size';
  * @param total Total size.
  * @returns The summary line.
  */
-function line(sizes: string[], total: string | number) {
+function line(sizes: string[], total: string) {
   return (
-    dim(green('[total] ')) +
-    (sizes.length > 0 ? sizes.join(red(' + ')) + red(' = ') : '') +
-    yellow(total)
+    util.styleText(['dim', 'green'], '[total] ') +
+    (sizes.length > 0
+      ? sizes.join(util.styleText('red', ' + ')) + util.styleText('red', ' = ')
+      : '') +
+    util.styleText('yellow', total)
   );
 }
 
@@ -37,17 +39,19 @@ export function summarize(
     const item = summary[type];
     const gzipItem = gzip && gzip[type];
     if (item && item.size > 0) {
-      sizes.push(color(getSize(item, options)));
+      sizes.push(util.styleText(color, getSize(item, options)));
     }
     if (gzipItem && gzipItem.size > 0) {
-      gzipSizes.push(color(getSize(gzipItem, options)));
+      gzipSizes.push(util.styleText(color, getSize(gzipItem, options)));
     }
   }
 
   return (
     line(sizes, getSize(total, options)) +
     (gzip
-      ? '\n' + line(gzipSizes, getSize(gzip.total, options)) + gray(' (gzip)')
+      ? '\n' +
+        line(gzipSizes, getSize(gzip.total, options)) +
+        util.styleText('gray', ' (gzip)')
       : '')
   );
 }
