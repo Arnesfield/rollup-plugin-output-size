@@ -1,10 +1,10 @@
 import { expect } from 'chai';
-import prettyBytes from 'pretty-bytes';
 import util from 'util';
 import { Size, summarize, Summary, SummarySizes } from '../src';
+import { formatBytes } from '../src/utils/format-bytes';
 
 function size(size: number): Size {
-  return { size, hSize: prettyBytes(size) };
+  return { size, hSize: formatBytes(size) };
 }
 
 function getSizes(): SummarySizes {

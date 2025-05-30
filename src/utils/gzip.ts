@@ -1,7 +1,7 @@
-import prettyBytes from 'pretty-bytes';
 import util from 'util';
 import zlib from 'zlib';
 import { Size } from '../types/size.types';
+import { formatBytes } from './format-bytes';
 
 const _gzip = util.promisify(zlib.gzip);
 
@@ -12,5 +12,5 @@ const _gzip = util.promisify(zlib.gzip);
  */
 export async function gzip(input: string | Uint8Array): Promise<Size> {
   const size = input ? (await _gzip(input, { level: 9 })).byteLength : 0;
-  return { size, hSize: prettyBytes(size) };
+  return { size, hSize: formatBytes(size) };
 }
