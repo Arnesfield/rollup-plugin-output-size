@@ -1,5 +1,4 @@
 import eslint from '@rollup/plugin-eslint';
-import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import { RollupOptions } from 'rollup';
 import cleanup from 'rollup-plugin-cleanup';
@@ -16,8 +15,12 @@ const bytes = true;
 const WATCH = process.env.ROLLUP_WATCH === 'true';
 const input = 'src/index.ts';
 
-// esm dependencies to be bundled into the cjs build
-const esmExternals = ['pretty-bytes'];
+// for preview mode utils chunk
+const utils = [
+  'src/utils/format.ts',
+  'src/utils/gzip.ts',
+  'src/utils/summarize.ts'
+];
 
 function build() {
   return esbuild({ target: 'esnext' });
@@ -53,18 +56,10 @@ export default defineConfig([
       sourcemap: preview,
       entryFileNames: '[name].cjs',
       chunkFileNames: '[name].cjs',
-      // for preview mode, create a separate chunk for esm externals
-      manualChunks: preview ? { vendor: esmExternals } : undefined
+      // for preview mode, create a separate chunk for utils
+      manualChunks: preview ? { utils } : undefined
     },
-    plugins: [
-      build(),
-      clean(),
-      nodeResolve(),
-      // exclude esm dependencies from external
-      // since they will be bundled into the cjs build
-      nodeExternals({ exclude: esmExternals }),
-      size()
-    ]
+    plugins: [build(), clean(), nodeExternals(), size()]
   },
   {
     input,
