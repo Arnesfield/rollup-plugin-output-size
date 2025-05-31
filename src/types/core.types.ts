@@ -53,6 +53,3 @@ export interface Options {
     output: OutputBundle[keyof OutputBundle]
   ): void | Promise<void>;
 }
-
-/** @deprecated Since v1.4.0. Use {@linkcode Options} instead. */
-export type RollupOutputSizeOptions = Options;
