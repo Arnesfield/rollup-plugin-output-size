@@ -62,6 +62,7 @@
     "concurrently": "^9.1.2",
     "eslint": "^9.28.0",
     "eslint-plugin-chai-friendly": "^1.0.1",
+    "eslint-plugin-jsdoc": "^50.6.17",
     "globals": "^16.2.0",
     "mocha": "^11.1.0",
     "prettier": "^3.5.3",
