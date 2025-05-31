@@ -45,9 +45,10 @@
     "check": "npm run all -- \"npm:lint -- --max-warnings 0\" tsc",
     "format": "npm run lint -- --fix && prettier -cw .",
     "lint": "eslint .",
-    "start": "npm run bundle -- -w --no-watch.clearScreen",
+    "start": "npm run watch -- --environment NODE_ENV:development",
     "test": "npm run all -- mocha npm:check",
-    "test:watch": "mocha -w"
+    "test:watch": "mocha -w",
+    "watch": "npm run bundle -- -w --no-watch.clearScreen"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
