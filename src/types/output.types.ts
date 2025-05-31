@@ -17,8 +17,8 @@ export interface OutputInfo extends Size {
   /** Output type. */
   type: OutputType;
   /**
-   * The gzipped size of the output. Provided unless the
-   * {@linkcode Options.gzip gzip} option is set to `false`.
+   * The gzipped size of the output.
+   * Provided unless {@linkcode Options.gzip} is set to `false`.
    */
   gzip?: Size;
 }
